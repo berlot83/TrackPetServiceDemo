@@ -19,10 +19,36 @@
         <artifactId>maven-war-plugin</artifactId>
         <version>3.0.0</version>
         <configuration>
+        <webappDirectory>WebContent</webappDirectory>
           <warSourceDirectory>WebContent</warSourceDirectory>
+<!--             <webappDirectory>/sample/servlet/container/deploy/directory</webappDirectory> -->
         </configuration>
+      
       </plugin>
-    </plugins>
+      <!-- Webapp-runner start -->
+      <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <executions>
+                <execution>
+                    <phase>package</phase>
+                    <goals><goal>copy</goal></goals>
+                    <configuration>
+                        <artifactItems>
+                            <artifactItem>
+                                <groupId>com.github.jsimone</groupId>
+                                <artifactId>webapp-runner</artifactId>
+                                <version>9.0.11.0</version>
+                                <destFileName>webapp-runner.jar</destFileName>
+                            </artifactItem>
+                        </artifactItems>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+      <!-- Webapp-runner end -->
+    </plugins> 
+    
   </build>
   
   <dependencies>
