@@ -1,1 +1,1 @@
-web: sh target/bin/webapp
+web: sh java -jar target/dependency/webapp-runner.jar target/TrackPetService-0.0.1-SNAPSHOT.war
