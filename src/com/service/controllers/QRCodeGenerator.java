@@ -1,18 +1,11 @@
 package com.service.controllers;
 
-import java.awt.Image;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.Base64;
-
-import javax.imageio.ImageIO;
-
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
@@ -29,7 +22,8 @@ public class QRCodeGenerator {
 		Path path = FileSystems.getDefault().getPath(filePath);
 		MatrixToImageWriter.writeToPath(bitMatrix, "PNG", path);
 		
-		  File file = new File("C:/Users/user/Documents/workspace-sts-3.9.0.RELEASE/TrackPetService/WebContent/QRcodes/MyQRCode_"+value+".png");
+		  //File file = new File("C:/Users/user/Documents/workspace-sts-3.9.0.RELEASE/TrackPetService/WebContent/QRcodes/MyQRCode_"+value+".png");
+		  File file = new File("https://pets2018.herokuapp.com/QRcodes/MyQRCode_"+value+".png");
 		  FileInputStream fileInputStreamReader = new FileInputStream(file);
 		  byte[] bytes = new byte[(int)file.length()];
 		  fileInputStreamReader.read(bytes);
@@ -39,7 +33,4 @@ public class QRCodeGenerator {
 		return encodedFile;
 	}
 
-	public static void main(String[] args) throws WriterException, IOException {
-		System.out.println(generateQRCodeImageToBase64("holamundo", 200, 200, "/fdg/dfg", "value"));
-	}
 }

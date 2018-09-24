@@ -98,7 +98,9 @@ public class PetController implements Crud {
 	
 	
 	public String createQRFromPet(String name, String value) throws URISyntaxException {
-		final String QR_CODE_IMAGE_PATH = "C:\\Users\\user\\Documents\\workspace-sts-3.9.0.RELEASE\\TrackPetService\\WebContent\\QRcodes\\MyQRCode_"+value+".png";
+		//final String QR_CODE_IMAGE_PATH = "C:\\Users\\user\\Documents\\workspace-sts-3.9.0.RELEASE\\TrackPetService\\WebContent\\QRcodes\\MyQRCode_"+value+".png";
+		final String QR_CODE_IMAGE_PATH = "https://pets2018.herokuapp.com/QRcodes/MyQRCode_"+value+".png";
+		
 		String resultBase64 = null;
 		try {
 	    	resultBase64 = QRCodeGenerator.generateQRCodeImageToBase64(getPet(name, value).toString(), 300, 300, QR_CODE_IMAGE_PATH, value);

@@ -11,13 +11,12 @@ public class Main {
 
 	public static void main(String[] args) throws URISyntaxException {
 		
+		/* Only to Test-ones */
+		
 		PetController pc = new PetController();
-		//pc.insertPet("Dachhound", "Buddy", 2, "Lisandro de la Torre", "Battle y ordoñez", "Capital Federal", "11-53189339", "11-46020378", "Ninguna");
-		//DBObject object = pc.getPet("name", "Peppon");
-		//pc.createQRFromPet("name","Peppon");
-		Random r = new Random();
-		int i = r.nextInt(100);
-		System.out.println(i);
+			//pc.insertPet("Dachhound", "Buddy", 2, "Lisandro de la Torre", "Battle y ordoñez", "Capital Federal", "11-53189339", "11-46020378", "Ninguna");
+			//DBObject object = pc.getPet("name", "Peppon");
+			//pc.createQRFromPet("name","Peppon");
 		}
 
 }

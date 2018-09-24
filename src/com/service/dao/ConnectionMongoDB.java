@@ -1,13 +1,11 @@
 package com.service.dao;
 
 import java.util.Date;
-
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.MongoClient;
-import com.mongodb.WriteResult;
-import com.mongodb.connection.Connection;
+
 
 public class ConnectionMongoDB {
 	
