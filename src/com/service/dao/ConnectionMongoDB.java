@@ -25,9 +25,8 @@ public class ConnectionMongoDB {
 //		return connect;
 		
 		MongoClientURI uri = new MongoClientURI("mongodb://berlot83:2911danaa@cluster0-shard-00-00-o59x4.mongodb.net:27017,cluster0-shard-00-01-o59x4.mongodb.net:27017,cluster0-shard-00-02-o59x4.mongodb.net:27017/dbpets?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true");
-
-			MongoClient mongoClient = new MongoClient(uri);
-			MongoDatabase database = mongoClient.getDatabase("pets");
+		MongoClient mongoClient = new MongoClient(uri);
+		MongoDatabase database = mongoClient.getDatabase("pets");
 
 		return database;
 	}
