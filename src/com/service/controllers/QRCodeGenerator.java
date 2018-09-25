@@ -24,10 +24,7 @@ public class QRCodeGenerator {
 		Path path = FileSystems.getDefault().getPath(filePath);
 		MatrixToImageWriter.writeToPath(bitMatrix, "PNG", path);
 		
-		  //File file = new File("C:/Users/user/Documents/workspace-sts-3.9.0.RELEASE/TrackPetService/WebContent/QRcodes/MyQRCode_"+value+".png");
-
-		  String aPath = new File("").getAbsolutePath().concat("QRcodes/MyQRCode_"+value+".png");
-		  File file = new File(aPath);
+		  File file = new File("/QRcodes/MyQRCode_"+value+".png");
 		  FileInputStream fileInputStreamReader = new FileInputStream(file);
 		  byte[] bytes = new byte[(int)file.length()];
 		  fileInputStreamReader.read(bytes);

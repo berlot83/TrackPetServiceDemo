@@ -1,6 +1,5 @@
 package com.service.controllers;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Date;
@@ -108,7 +107,7 @@ public class PetController implements Crud {
 	
 	public String createQRFromPet(String name, String value) throws URISyntaxException {
 		//final String QR_CODE_IMAGE_PATH = "C:\\Users\\user\\Documents\\workspace-sts-3.9.0.RELEASE\\TrackPetService\\WebContent\\QRcodes\\MyQRCode_"+value+".png";
-		final String QR_CODE_IMAGE_PATH = new File("").getAbsolutePath().concat("QRcodes/MyQRCode_"+value+".png");
+		final String QR_CODE_IMAGE_PATH = "https://pets2018.herokuapp.com/QRcodes/MyQRCode_"+value+".png";
 		
 		String resultBase64 = null;
 		try {
