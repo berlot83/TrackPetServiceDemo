@@ -1,5 +1,6 @@
 package com.service.controllers;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Date;
@@ -10,12 +11,19 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+
+import org.bson.Document;
+
 import com.google.zxing.WriterException;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
+import com.mongodb.client.MongoDatabase;
 import com.service.dao.ConnectionMongoDB;
 import com.service.dao.Crud;
 import com.service.model.Pet;
@@ -23,7 +31,7 @@ import com.service.model.Pet;
 @Path("/pet")
 public class PetController implements Crud {
 	/* Initializer with global variable */
-	DB connectNow;
+	MongoDatabase connectNow;
 	{
 		connectNow = ConnectionMongoDB.connectNow();
 	}
@@ -36,19 +44,19 @@ public class PetController implements Crud {
 	public String insertPet(@FormParam("raze") String raze, @FormParam("name") String name, @FormParam("age") int age, @FormParam("street1") String street1, @FormParam("street2") String street2, @FormParam("city") String city, @FormParam("phone1") String phone1, @FormParam("phone2") String phone2, @FormParam("illness") String illness) {
 		String respuesta = null;
 		if(connectNow != null) {
-			DBCollection table = connectNow.getCollection("pets");
-			BasicDBObject document = new BasicDBObject();
-			document.put("raze", raze);
-			document.put("name", name);
-			document.put("age", age);
-			document.put("street1", street1);
-			document.put("street2", street2);
-			document.put("city", city);
-			document.put("phone1", phone1);
-			document.put("phone2", phone2);
-			document.put("illness", illness);
-			document.put("createdDate", new Date());
-			table.insert(document);
+			MongoCollection table = connectNow.getCollection("pets");
+			Document document = new Document();
+			document.append("raze", raze);
+			document.append("name", name);
+			document.append("age", age);
+			document.append("street1", street1);
+			document.append("street2", street2);
+			document.append("city", city);
+			document.append("phone1", phone1);
+			document.append("phone2", phone2);
+			document.append("illness", illness);
+			document.append("createdDate", new Date());
+			table.insertOne(document);
 			System.out.println("Dato insertado");
 			PetController pc = new PetController();
 			try {
@@ -66,13 +74,14 @@ public class PetController implements Crud {
 	@GET
 	@Path("get")
 	@Override
-	public DBObject getPet(String name, String value) {
-		DBObject result = null;
+	public Document getPet(String name, String value) {
+		Document result = null;
 		try{
-			DBCollection table = connectNow.getCollection("pets");
-			BasicDBObject document = new BasicDBObject();
-			document.put(name, value);
-			DBCursor cursor = table.find(document);
+			MongoCollection<Document> table = connectNow.getCollection("pets");
+			FindIterable<Document> findIterable = table.find();
+			Document document = new Document();
+			document.append(name, value);
+			MongoCursor<Document> cursor = findIterable.iterator();
 			
 			while(cursor.hasNext()) {
 				result = cursor.next();
@@ -99,7 +108,7 @@ public class PetController implements Crud {
 	
 	public String createQRFromPet(String name, String value) throws URISyntaxException {
 		//final String QR_CODE_IMAGE_PATH = "C:\\Users\\user\\Documents\\workspace-sts-3.9.0.RELEASE\\TrackPetService\\WebContent\\QRcodes\\MyQRCode_"+value+".png";
-		final String QR_CODE_IMAGE_PATH = "https://pets2018.herokuapp.com/QRcodes/MyQRCode_"+value+".png";
+		final String QR_CODE_IMAGE_PATH = new File("").getAbsolutePath().concat("QRcodes/MyQRCode_"+value+".png");
 		
 		String resultBase64 = null;
 		try {
