@@ -14,7 +14,7 @@ public class Main {
 		/* Only to Test-ones */
 		
 		PetController pc = new PetController();
-			//pc.insertPet("Dachhound", "Buddy", 2, "Lisandro de la Torre", "Battle y ordoñez", "Capital Federal", "11-53189339", "11-46020378", "Ninguna");
+			//pc.insertPet("Dachhound", "Buddy", 2, "Lisandro de la Torre", "Battle y ordolez", "Capital Federal", "1153189339", "1146020378", "Ninguna");
 			//DBObject object = pc.getPet("name", "Peppon");
 			//pc.createQRFromPet("name","Peppon");
 		}
