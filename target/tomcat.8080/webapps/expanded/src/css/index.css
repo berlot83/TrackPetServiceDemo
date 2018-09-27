@@ -1,0 +1,59 @@
+@charset "ISO-8859-1";
+
+body{
+	background-image: url("../img/pawbackground.png");
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+/* Change the link color to #111 (black) on hover */
+li a:hover {
+    background-color: #111;
+}
+
+#carouselExampleControls{
+	
+}
+
+.carousel-item.active,
+.carousel-item-next,
+.carousel-item-prev {
+  display: block;
+  padding: 0px;
+  margin: 0px;
+}
+
+#firstBody{
+	padding-left: 50px;
+	padding-right: 50px;
+}
+
+#infoDiv {
+	text-align: justify;
+	background:white;
+	border-radius: 15px;
+	box-shadow: 0px 0px 20px black;
+	
+}
+
+a:link{
+	color:green;
+}
