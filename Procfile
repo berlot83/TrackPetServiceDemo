@@ -1,1 +1,1 @@
-web: java -jar target/dependency/webapp-runner.jar target/*.war --8070
+web: java -jar target/dependency/webapp-runner.jar target/*.war
