@@ -34,10 +34,10 @@ public class QRCodeGenerator {
 		QRCodeWriter qrCodeWriter = new QRCodeWriter();
 		BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, width, height);
 
-		Path path = FileSystems.getDefault().getPath(filePath);
-		MatrixToImageWriter.writeToPath(bitMatrix, "PNG", path);
+		//Path path = FileSystems.getDefault().getPath(filePath);
+		//MatrixToImageWriter.writeToPath(bitMatrix, "PNG", path);
 		
-		  File file = new File(path+"MyQRCode_"+value+".png");
+		  File file = new File("");
 		  FileInputStream fileInputStreamReader = new FileInputStream(file);
 		  byte[] bytes = new byte[(int)file.length()];
 		  fileInputStreamReader.read(bytes);

@@ -102,7 +102,7 @@ public class PetController implements Crud {
 	
 	public String createQRFromPet(String name, String value) throws URISyntaxException {
 		//final String QR_CODE_IMAGE_PATH = "C:\\Users\\user\\Documents\\workspace-sts-3.9.0.RELEASE\\TrackPetService\\WebContent\\QRcodes\\MyQRCode_"+value+".png";
-		final String QR_CODE_IMAGE_PATH = "QRcodes\\MyQRCode_"+value+".png";
+		final String QR_CODE_IMAGE_PATH = "";
 		
 		String resultBase64 = null;
 		try {
