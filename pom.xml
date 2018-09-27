@@ -19,8 +19,9 @@
         <artifactId>maven-war-plugin</artifactId>
         <version>3.0.0</version>
         <configuration>
-        <webappDirectory>WebContent</webappDirectory>
+<!--         <webappDirectory>WebContent</webappDirectory> -->
           <warSourceDirectory>WebContent</warSourceDirectory>
+          <failOnMissingWebXml>false</failOnMissingWebXml>
 <!--             <webappDirectory>/rest</webappDirectory> -->
         </configuration>
       
@@ -29,6 +30,7 @@
       <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-dependency-plugin</artifactId>
+            <version>2.3</version>
             <executions>
                 <execution>
                     <phase>package</phase>
