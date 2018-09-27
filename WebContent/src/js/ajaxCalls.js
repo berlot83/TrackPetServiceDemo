@@ -5,7 +5,7 @@
 
 /* File source Ajax calls */
 function insertPet(){
-	
+	console.log("Hola mundo");
 	var raze = document.getElementById("raze");
 	var name = document.getElementById("name");
 	var age = document.getElementById("age");
@@ -17,7 +17,7 @@ function insertPet(){
 	var illness = document.getElementById("illness");
 	
 	var xhr = new XMLHttpRequest();
-	var url = "https://pets2018.herokuapp.com/TrackPetService/rest/pet/insert";
+	var url = "/TrackPetService/rest/pet/insert";
 
 	//Send the proper header information along with the request
 	xhr.onreadystatechange = function() {//Call a function when the state changes.

@@ -21,7 +21,7 @@
         <configuration>
         <webappDirectory>WebContent</webappDirectory>
           <warSourceDirectory>WebContent</warSourceDirectory>
-<!--             <webappDirectory>/sample/servlet/container/deploy/directory</webappDirectory> -->
+<!--             <webappDirectory>/rest</webappDirectory> -->
         </configuration>
       
       </plugin>

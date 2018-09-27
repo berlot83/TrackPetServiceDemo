@@ -75,7 +75,7 @@ window.onbeforeunload = function(e) {
 				<label for="illness">Sufre alguna efermedad</label> <input
 					type="text" id="illness" placeholder="illness" class="form-control" />
 			</div>
-			<button id="send" class="btn btn-primary" onclick="insertPet()">Enviar y crear Código QR</button>
+			<button id="send" class="btn btn-primary" onclick="insertPet()" >Enviar y crear Código QR</button>
 		</div>
 		<div class="col-6">
 		<br>
