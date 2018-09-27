@@ -1,1 +1,1 @@
-web: java -jar target/dependency/webapp-runner.jar target/*.war --port 8080 --access-log true
+web: java -jar target/dependency/webapp-runner.jar target/*.war --access-log true
