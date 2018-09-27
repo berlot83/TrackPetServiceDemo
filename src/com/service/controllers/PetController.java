@@ -1,7 +1,6 @@
 package com.service.controllers;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.Date;
 import java.util.NoSuchElementException;
 import javax.ws.rs.Consumes;
@@ -10,9 +9,8 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-
 import org.bson.Document;
-
+import com.google.gson.Gson;
 import com.google.zxing.WriterException;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
@@ -24,6 +22,7 @@ import com.service.model.Pet;
 
 @Path("/pet")
 public class PetController implements Crud {
+	
 	/* Initializer with global variable */
 	MongoDatabase connectNow;
 	{
@@ -36,9 +35,27 @@ public class PetController implements Crud {
 	@Consumes("application/x-www-form-urlencoded")
 	@Override
 	public String insertPet(@FormParam("raze") String raze, @FormParam("name") String name, @FormParam("age") int age, @FormParam("street1") String street1, @FormParam("street2") String street2, @FormParam("city") String city, @FormParam("phone1") String phone1, @FormParam("phone2") String phone2, @FormParam("illness") String illness) {
-		String respuesta = null;
+		/* String response */
+		String response = null;
+		
+		/* Declares Json and create a new Pet to insert data */
+		Gson gson = new Gson();
+		Pet pet = new Pet(raze, name, age,street1, street2, city, phone1, phone2, illness);
+		
+		/* Add all data needed formatted to Json String */
+		String json = gson.toJson(pet);
+		String toBase64QRCode = null;
+		
+		/* Makes new Connection */
 		if(connectNow != null) {
-			MongoCollection table = connectNow.getCollection("pets");
+			PetController pc = new PetController();
+			try {
+				toBase64QRCode = pc.createQRFromPet(json);
+				System.out.println(toBase64QRCode);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			MongoCollection<Document> table = connectNow.getCollection("pets");
 			Document document = new Document();
 			document.append("raze", raze);
 			document.append("name", name);
@@ -49,32 +66,34 @@ public class PetController implements Crud {
 			document.append("phone1", phone1);
 			document.append("phone2", phone2);
 			document.append("illness", illness);
+			document.append("toBase64QRCode", toBase64QRCode );
 			document.append("createdDate", new Date());
 			table.insertOne(document);
-			System.out.println("Dato insertado");
-			PetController pc = new PetController();
-			try {
-				respuesta = pc.createQRFromPet("name", name);
-			} catch (URISyntaxException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
+			/* Response */
+			response = "Console: Dato insertado";
+			System.out.println(response);
 		}else {
-			respuesta = "La insercción no pudo realizarse, probablemente haya un conflicto con la DB";
+			
+			/* Response */
+			response = "Console: La insercción no pudo realizarse, probablemente haya un conflicto con la DB";
+			toBase64QRCode = response; // If goes wrong take the same value from response so server says cant do it;
+			System.out.println(response);
 		}
-		return respuesta;
+		return toBase64QRCode;
 	}
 	
+	/* Only for search improvement by name or other variable, not to insert and view at first time */
 	@GET
 	@Path("get")
 	@Override
-	public Document getPet(String name, String value) {
+	public Document getPet(String name, String nameValue) {
 		Document result = null;
 		try{
 			MongoCollection<Document> table = connectNow.getCollection("pets");
 			FindIterable<Document> findIterable = table.find();
 			Document document = new Document();
-			document.append(name, value);
+			document.append(name, nameValue);
 			MongoCursor<Document> cursor = findIterable.iterator();
 			
 			while(cursor.hasNext()) {
@@ -86,33 +105,36 @@ public class PetController implements Crud {
 		}
 	return result;
 	}
+
 	
 	@Override
 	public Pet updatePet() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void deletePet() {
-		// TODO Auto-generated method stub
-		
 	}
 	
-	
-	public String createQRFromPet(String name, String value) throws URISyntaxException {
-		//final String QR_CODE_IMAGE_PATH = "C:\\Users\\user\\Documents\\workspace-sts-3.9.0.RELEASE\\TrackPetService\\WebContent\\QRcodes\\MyQRCode_"+value+".png";
-		final String QR_CODE_IMAGE_PATH = "";
+	public String createQRFromPet(String data){
 		
-		String resultBase64 = null;
+		byte[] resultToByte = null;
+		String toBase64 = null;
 		try {
-	    	resultBase64 = QRCodeGenerator.generateQRCodeImageToBase64(getPet(name, value).toString(), 300, 300, QR_CODE_IMAGE_PATH, value);
+			/* Convert to byte[] ZXing html form */
+	    	resultToByte = QRCodeGenerator.generateQRCodeImageToByte(data, 300, 300);
+	    	
+	    	/* Convert to Base64 the last byte[] variable */
+	    	toBase64 = QRCodeGenerator.toBase64(resultToByte);
+	    	
+	    	/* Print it for test-one */
+	    	System.out.println(toBase64);
 		} catch (WriterException e) {
 	        System.out.println("Could not generate QR Code, WriterException :: " + e.getMessage());
 	    } catch (IOException e) {
 	        System.out.println("Could not generate QR Code, IOException :: " + e.getMessage());
 	    }
-		return resultBase64;
+		return toBase64;
 	}
 
 }

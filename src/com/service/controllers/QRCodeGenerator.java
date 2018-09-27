@@ -1,12 +1,7 @@
 package com.service.controllers;
 
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
 import java.util.Base64;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
@@ -14,30 +9,31 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
-public class QRCodeGenerator {
+public class QRCodeGenerator{
 
-	public static String generateQRCodeImageToBase64(String text, int width, int height, String filePath, String value)
-			throws WriterException, IOException, URISyntaxException {
+	/* Create a QR-Code white byte[] results */
+	public static byte[] generateQRCodeImageToByte(String text, int width, int height)
+			throws WriterException, IOException {
+		
+		/* ZXing Matrix formatter */ 
 		QRCodeWriter qrCodeWriter = new QRCodeWriter();
 		BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, width, height);
-
-		Path path = FileSystems.getDefault().getPath(filePath);
-		MatrixToImageWriter.writeToPath(bitMatrix, "PNG", path);
 		
-		  File file = new File("");
-		  FileInputStream fileInputStreamReader = new FileInputStream(file);
-		  byte[] bytes = new byte[(int)file.length()];
-		  fileInputStreamReader.read(bytes);
-		  String encodedFile = Base64.getEncoder().encodeToString(bytes);
-		  System.out.println(encodedFile);
-		  
-		  return encodedFile;
+		/* Manage the bytes for an output in this case byte[] */ 
+		ByteArrayOutputStream imageOut = new ByteArrayOutputStream();
+		MatrixToImageWriter.writeToStream(bitMatrix, "PNG", imageOut);
+		byte[] imageData = imageOut.toByteArray(); 
+		return imageData;
+	}
+
+	public static String toBase64(byte[] imageData) {
+		/* Conevert byte[] to Base64 encode in a simple line, need to return an String to insert DB data */
+		String i = Base64.getEncoder().encodeToString(imageData);
+		return i;
 	}
 	
-	public static void main(String[] args) throws WriterException, IOException, URISyntaxException {
-	//	QRCodeGenerator.generateQRCodeImageToBase64("Hola mundo", 300, 300, "Test","m");
-		URL pathTemp = new URL("https://pets2018.herokuapp.com/QRcodes/MyQRCode_.png");
-		System.out.println(pathTemp);
+	public static void main(String[] args) {
+	/* For console test porpuse only */
 	}
 
 }

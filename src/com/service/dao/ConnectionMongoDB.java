@@ -32,16 +32,16 @@ public class ConnectionMongoDB {
 	}
 	
 	public void insertTo() {
-		//DB connectToDB = connectNow();
-		MongoDatabase connectToDB = connectNow();
-		
-		MongoCollection<Document> table = connectToDB.getCollection("pets");
-		Document document = new Document();
-		//document.append("name", "value");
-		document.append("name", "hola");
-		document.append("age", 50);
-		document.append("createdDate", new Date());
-		table.insertOne(document);
+//		//DB connectToDB = connectNow();
+//		MongoDatabase connectToDB = connectNow();
+//		
+//		MongoCollection<Document> table = connectToDB.getCollection("pets");
+//		Document document = new Document();
+//		//document.append("name", "value");
+//		document.append("name", "hola");
+//		document.append("age", 50);
+//		document.append("createdDate", new Date());
+//		table.insertOne(document);
 	}
 	
 	public static void main(String[] args) {

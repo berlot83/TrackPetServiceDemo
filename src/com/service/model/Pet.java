@@ -15,10 +15,16 @@ public class Pet {
 		
 	}
 	
-	public Pet(String raze, String name, int age) {
+	public Pet(String raze, String name, int age, String street1, String street2, String city, String phone1, String phone2, String illness) {
 		this.raze = raze;
 		this.name = name;
 		this.age = age;
+		this.street1 = street1;
+		this.street2 = street2;
+		this.city = city;
+		this.phone1 = phone1;
+		this.phone2 = phone2;
+		this.illness = illness;
 	}
 
 	public String getRaze() {
