@@ -17,7 +17,7 @@ function insertPet(){
 	var illness = document.getElementById("illness");
 	
 	var xhr = new XMLHttpRequest();
-	var url = "/TrackPetService/rest/pet/insert";
+	var url = "/rest/pet/insert";
 
 	//Send the proper header information along with the request
 	xhr.onreadystatechange = function() {//Call a function when the state changes.
