@@ -18,7 +18,7 @@
        
        <init-param><!-- com.sun.jersey.config.property.packages -->
              	<param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
-             	<param-value>TrackPetService</param-value>
+             	<param-value>com.service.controllers.PetController</param-value><!-- TrackPetService -->
        </init-param>
        
    <load-on-startup>1</load-on-startup>
