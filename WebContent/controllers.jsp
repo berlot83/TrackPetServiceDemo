@@ -6,13 +6,13 @@
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link rel="stylesheet" type="text/css" href="src/css/controllers" >
 <script type="text/javascript" src="src/js/ajaxCalls.js"></script>
+
 <script type="text/javascript" src="src/js/various.js"></script>
-
 <link rel="stylesheet" type="text/css" href="src/css/index.css">
+<link rel="stylesheet" type="text/css" href="src/css/maps.css">
+<link href="https://fonts.googleapis.com/css?family=Mali:500" rel="stylesheet">
 
-<link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
 <script type="text/javascript">
 window.onbeforeunload = function(e) {
     return 'Please press the Logout button to logout.';
@@ -21,82 +21,191 @@ window.onbeforeunload = function(e) {
 
 <title>Track Pet services Controller Page</title>
 </head>
-<body onload="advice()" style="background-image: url('src/img/pawbackground.png'); background-repeat:'no-repeat'; background-attachment: fixed;" >
-	
+<body onload="advice(), initMap()"
+	style="">
+<!-- background-image: url('src/img/pawbackground.png'); background-repeat: 'no-repeat'; background-attachment: fixed; -->
 	<!-- Star menu bar -->
 	<ul>
-	  <li><a href="index.jsp">Inicio</a></li>
-	  <li><a href="controllers.jsp">Veterinarias/revendedores</a></li>
-	  <li><a href="#" onclick="contact()" >Contacto</a></li>
-	  <li><a href="#" onclick="about()" >Sobre Nosotros</a></li>
-	  <li><a href="#" onclick="about()" >MolokoAccess</a></li>
-	    <li><a href="#" onclick="reportPet()" >Reportar una mascota</a></li>
+		<li><a href="index.jsp">Inicio</a></li>
+		<li><a href="controllers.jsp">Veterinarias/revendedores</a></li>
+		<li><a href="#" onclick="contact()">Contacto</a></li>
+		<li><a href="#" onclick="about()">Sobre Nosotros</a></li>
+		<li><a href="#" onclick="about()">MolokoAccess</a></li>
+		<li><a href="#" onclick="reportPet()">Reportar una mascota</a></li>
 	</ul>
 	<!-- End menu bar -->
-	
-	<div id="divContent" style="padding-left:50px; padding-right:50px;">
-	<div class="row" style="padding: 5%; font-family: 'Pacifico', cursive;">
-		<div class="col-6" style="color:Turquoise; text-shadow: 0px 0px 8px rgba(0, 0, 0, 1);">
-		<h2 style="font-family: 'Pacifico', cursive; color:'Orchid'; text-align:center;">Servicio de información de mascotas</h2>
-		<h4 style="color:Turquoise; text-align:center;">"Alta de Mascota"</h4>
-			<div class="form-group" style="color:Turquoise;">
-				<label for="raze">Raza</label> <input type="text" id="raze"
-					placeholder="raze" class="form-control" />
-			</div>
-			<div class="form-group" style="color:Turquoise;">
-				<label for="name">Nombre</label> <input type="text" id="name"
-					placeholder="name" class="form-control" />
-			</div>
-			<div class="form-group">
-				<label for="age">Edad</label> <input type="number" id="age"
-					placeholder="age" class="form-control" />
-			</div>
-			<div class="form-group">
-				<label for="street1">Dirección principal (Altura incluida)</label> <input
-					type="text" id="street1" placeholder="street1" class="form-control" />
-			</div>
-			<div class="form-group">
-				<label for="street2">Corta con Calle</label> <input type="text"
-					id="street2" placeholder="street2" class="form-control" />
-			</div>
-			<div class="form-group">
-				<label for="city">Ciudad</label> <input type="text" id="city"
-					placeholder="city" class="form-control" />
-			</div>
-			<div class="form-group">
-				<label for="phone1">Teléfono</label> <input type="text" id="phone1"
-					placeholder="phone1" class="form-control" />
-			</div>
-			<div class="form-group">
-				<label for="phone2">Teléfono</label> <input type="text" id="phone2"
-					placeholder="phone2" class="form-control" />
-			</div>
-			<div class="form-group"> 
-				<label for="illness">Sufre alguna efermedad</label> <input
-					type="text" id="illness" placeholder="illness" class="form-control" />
-			</div>
-			<button id="send" class="btn btn-primary" onclick="insertPet()" >Enviar y crear Código QR</button>
-		</div>
-		<div class="col-6">
-		<br>
-		<h4 style="color:Plum; text-shadow: 0px 0px 4px rgba(0, 0, 0, 1);">Etiqueta QR:</h4>
-		<hr>
-		<div id="qrResult" style="text-align:center;">
-		<!-- Ajax call response from endpoint with qrCodeImages -->
-		<div id="downloadButtonDiv" ></div>
-		</div>
-		<hr>
-			<img alt="" src="src/img/pet1.jpg" class="img-fluid w-100, rounded">
-			<div>
-				<strong>Powered by</strong>
-			</div>
-			<img alt="Molokotech" src="src/img/molokoalternativo.png"
-				class="img-fluid" onclick="redirectTo()" >
+
+
+
+
+	<div id="divContent" style="padding-left: 50px; padding-right: 50px;">
+		<div class="row">
+			<div class="col-2"></div>
+			<div class="col-8">
+				<h2 style="text-align: center">Servicio de información de mascotas</h2>
+					<h4 style="text-align: center;">"Alta de Mascota"</h4>
+				<div class="form-group">
+					<label for="raze">Raza</label>
+
+					<!-- Start selector raze -->
+
+					<select class="form-control" id="raze">
+						<option value="Otra" selected>Otra</option>
+						<option value="Mestizo">Mestizo</option>
+						<option value="Alaskan Malamute">Alaskan Malamute</option>
+						<option value="American Staffordshire">American
+							Staffordshire</option>
+						<option value="Basset Hound">Basset Hound</option>
+						<option value="Beagle">Beagle</option>
+						<option value="Bichón Maltés">Bichón Maltés</option>
+						<option value="Mobtail">Bobtail</option>
+						<option value="Boxer">Boxer</option>
+						<option value="Branco Alemán">Branco Alemán</option>
+						<option value="Bulldog Francés">Bulldog Francés</option>
+						<option value="Bulldog Inglés">Bulldog Inglés</option>
+						<option value="Bullmastiff">Bullmastiff</option>
+						<option value="Cane Corso">Cane Corso</option>
+						<option value="Caniche">Caniche</option>
+						<option value="Carlino">Carlino</option>
+						<option value="Chihuahua">Chihuahua</option>
+						<option value="Chow Chow">Chow Chow</option>
+						<option value="Cocker Spaniel">Cocker Spaniel</option>
+						<option value="Collie">Collie</option>
+						<option value="Dálmata">Dálmata</option>
+						<option value="Dobermann">Dobermann</option>
+						<option value="Espagneul Breton">Espagneul Bretón</option>
+						<option value="Galgo Español">Galgo Español</option>
+						<option value="Golden Retriever">Golden Retriever</option>
+						<option value="Husky Siberiano">Husky Siberiano</option>
+						<option value="Labrador Retriever">Labrador Retriever</option>
+						<option value="Leonberguer">Leonberguer</option>
+						<option value="Mastín Español">Mastín Español</option>
+						<option value="Pastor Alemán">Pastor Alemán</option>
+						<option value="Pastor de Brie">Pastor de Brie</option>
+						<option value="Perro de Agua Español">Perro de Agua
+							Español</option>
+						<option value="San Bernardo">San Bernardo</option>
+						<option value="Scottish Terrier">Scottish Terrier</option>
+						<option value="Schnauzer Miniatura">Schnauzer Miniatura</option>
+						<option value="Setter Inglés">Setter Inglés</option>
+						<option value="Teckel">Teckel</option>
+						<option value="Terrier de Bedlington">Terrier de
+							Bedlington</option>
+						<option value="West Highland Terrier">West Highland
+							Terrier</option>
+						<option value="Yorkshire Terrier">Yorkshire Terrier</option>
+					</select>
+				</div>
+				<!-- End selector raze -->
+
+				<div class="form-group">
+					<label for="name">Nombre</label> <input type="text" id="name"
+						placeholder="name" class="form-control" />
+				</div>
+				<div class="form-group">
+					<label for="age">Edad</label><div id="resultAge"></div> 
 				
+				<!-- Start select age -->
+					<select class="form-control" id="age" onchange="age()">
+						<option value="2018">2018</option>
+						<option value="2017">2017</option>
+						<option value="2016">2016</option>
+						<option value="2015">2015</option>
+						<option value="2014">2014</option>
+						<option value="2013">2013</option>
+						<option value="2012">2012</option>
+						<option value="2011">2011</option>
+						<option value="2010">2010</option>
+						<option value="2009">2009</option>
+						<option value="2008">2008</option>
+						<option value="2007">2007</option>
+						<option value="2006">2006</option>
+						<option value="2005">2005</option>
+						<option value="2004">2004</option>
+						<option value="2003">2003</option>
+						<option value="2002">2002</option>
+						<option value="2001">2001</option>
+						<option value="2000">2000</option>
+						<option value="1999">1999</option>
+						<option value="1998">1998</option>
+						<option value="1997">1997</option>
+						<option value="1996">1996</option>
+						<option value="1995">1995</option>
+					</select>
+					<!-- End select age -->
+				<script type="text/javascript">
+				function age(){
+					var yearBirthay = document.getElementById("age");
+					var actualYear = (new Date()).getFullYear();
+					var age = actualYear - yearBirthay.value; 
+					
+					console.log(age);
+					
+					var resultAge = document.getElementById("resultAge");
+					
+					resultAge.innerHTML = "<h5><a href='#'><span class='badge badge-danger'>Edad actual de la mascota:  "+age+" años</span></a></h5>";
+				}
+				
+				</script>
+				
+				</div>
+				<div class="form-group">
+					<label for="street1">Dirección principal (Dirección altura, localidad, provincia)</label>
+					<input type="text" id="street1" placeholder="street1"
+						class="form-control" />
+				</div>
+				
+				<!-- Map Start -->
+				<div id="map"></div>
+				<!-- Map End -->
+				
+				<div class="form-group">
+					<label for="phone1">Teléfono</label> <input type="number"
+						id="phone1" placeholder="phone1" class="form-control" />
+				</div>
+				<div class="form-group">
+					<label for="phone2">Teléfono</label> <input type="number"
+						id="phone2" placeholder="phone2" class="form-control" />
+				</div>
+				<div class="form-group">
+					<label for="illness">Sufre alguna efermedad</label> <input
+						type="text" id="illness" placeholder="illness"
+						class="form-control" />
+				</div>
+				<button id="send" class="btn btn-danger" onclick="insertPet()">Almacenar datos
+					y crear Código QR</button>
+
+					<h4>Etiqueta QR:</h4>
+				<hr>
+				<div id="qrResult" style="text-align: center;">
+					<!-- Ajax call response from endpoint with qrCodeImages -->
+					<div id="downloadButtonDiv"></div>
+				</div>
+				<hr>
+				<img alt="" src="src/img/pet1.jpg" class="img-fluid w-100, rounded">
+				<div>
+					<strong>Powered by</strong>
+				</div>
+				<img alt="Molokotech" src="src/img/molokoalternativo.png"
+					class="img-fluid" onclick="redirectTo()">
+			</div>
+			<div class="col-2"></div>
 		</div>
 	</div>
-	</div>
+
+			
+
+				
+	
+	<!-- Start Google Maps Javascript -->
 </body>
+<script type="text/javascript" src="src/js/googleApis.js"></script>
+
+
+<!-- Javascript maps libraries -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDB_hzs9qAghUI1cOMXPae5Km72VFkYXKQ&libraries=places&callback=initMap"
+        async defer></script>
+<!-- Javascript maps libraries -->
 
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -113,8 +222,10 @@ window.onbeforeunload = function(e) {
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
 	integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
 	crossorigin="anonymous"></script>
-	
-		<link charset="utf-8" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
 
+<link charset="utf-8" rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
+	
 </html>

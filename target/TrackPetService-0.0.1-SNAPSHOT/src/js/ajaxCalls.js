@@ -17,7 +17,7 @@ function insertPet(){
 	var illness = document.getElementById("illness");
 	
 	var xhr = new XMLHttpRequest();
-	var url = "/rest/pet/insert";
+	var url = "/rest/pet/insert"; //For Webapp-runner must go this root /rest/pet/insert
 
 	//Send the proper header information along with the request
 	xhr.onreadystatechange = function() {//Call a function when the state changes.
@@ -54,7 +54,7 @@ function insertPet(){
 	}
 	xhr.open("POST", url, true);
 	xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xhr.send("raze="+raze.value+"&name="+name.value+"&age="+age.value+"&street1="+street1.value+"&street2="+street2.value+"&city="+city.value+"&phone1="+phone1.value+"&phone2="+phone2.value+"&illness="+illness.value);
+	xhr.send("raze="+raze.value+"&name="+name.value+"&age="+age.value+"&street1="+street1.value+"&phone1="+phone1.value+"&phone2="+phone2.value+"&illness="+illness.value);
 }
 
 function advice(){

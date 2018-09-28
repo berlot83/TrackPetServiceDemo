@@ -34,13 +34,13 @@ public class PetController implements Crud {
 	@Produces("application/json")
 	@Consumes("application/x-www-form-urlencoded")
 	@Override
-	public String insertPet(@FormParam("raze") String raze, @FormParam("name") String name, @FormParam("age") int age, @FormParam("street1") String street1, @FormParam("street2") String street2, @FormParam("city") String city, @FormParam("phone1") String phone1, @FormParam("phone2") String phone2, @FormParam("illness") String illness) {
+	public String insertPet(@FormParam("raze") String raze, @FormParam("name") String name, @FormParam("age") int age, @FormParam("street1") String street1, @FormParam("phone1") String phone1, @FormParam("phone2") String phone2, @FormParam("illness") String illness) {
 		/* String response */
 		String response = null;
 		
 		/* Declares Json and create a new Pet to insert data */
 		Gson gson = new Gson();
-		Pet pet = new Pet(raze, name, age,street1, street2, city, phone1, phone2, illness);
+		Pet pet = new Pet(raze, name, age,street1, phone1, phone2, illness);
 		
 		/* Add all data needed formatted to Json String */
 		String json = gson.toJson(pet);
@@ -61,8 +61,6 @@ public class PetController implements Crud {
 			document.append("name", name);
 			document.append("age", age);
 			document.append("street1", street1);
-			document.append("street2", street2);
-			document.append("city", city);
 			document.append("phone1", phone1);
 			document.append("phone2", phone2);
 			document.append("illness", illness);
@@ -76,7 +74,7 @@ public class PetController implements Crud {
 		}else {
 			
 			/* Response */
-			response = "Console: La insercción no pudo realizarse, probablemente haya un conflicto con la DB";
+			response = "Console: La insercciï¿½n no pudo realizarse, probablemente haya un conflicto con la DB";
 			toBase64QRCode = response; // If goes wrong take the same value from response so server says cant do it;
 			System.out.println(response);
 		}
