@@ -33,7 +33,7 @@ function loginAndInsert(){
 	    			var password = document.getElementById("password").value;
 	    			
 	    			var xhr = new XMLHttpRequest();
-	    			var url = "/TrackPetService/rest/pet/admin"; //For Webapp-runner must go this root /rest/pet/insert
+	    			var url = "/rest/pet/admin"; //For Webapp-runner must go this root /rest/pet/insert
 	    		
 	    			//Send the proper header information along with the request
 	    			xhr.onreadystatechange = function() {//Call a function when the state changes.
@@ -59,7 +59,7 @@ function loginAndInsert(){
 	    			    		var subscription = document.getElementById("subscription");
 	    			    		
 	    			    		var xhr1 = new XMLHttpRequest();
-	    			    		var url = "/TrackPetService/rest/pet/insert"; //For Webapp-runner must go this root /rest/pet/insert
+	    			    		var url = "/rest/pet/insert"; //For Webapp-runner must go this root /rest/pet/insert
 
 	    			    		//Send the proper header information along with the request
 	    			    		xhr1.onreadystatechange = function() {//Call a function when the state changes.
@@ -157,7 +157,7 @@ function insertPet(){
 	var subscription = document.getElementById("subscription");
 	
 	var xhr = new XMLHttpRequest();
-	var url = "/TrackPetService/rest/pet/insert"; //For Webapp-runner must go this root /rest/pet/insert
+	var url = "/rest/pet/insert"; //For Webapp-runner must go this root /rest/pet/insert
 
 	//Send the proper header information along with the request
 	xhr.onreadystatechange = function() {//Call a function when the state changes.
@@ -188,9 +188,7 @@ function insertPet(){
 	    	var downloadButtonDiv = document.getElementById("downloadButtonDiv");
 	    	downloadButtonDiv.appendChild(button);
 	    	
-	    	button.appendChild(link);
-	    	
-	    	
+	    	button.appendChild(link);	    	
 	    }
 	}
 	xhr.open("POST", url, true);
@@ -238,7 +236,7 @@ function loginToMolokoAccess(){
 	    			console.log(user);
 	    			console.log(password);
 	    			var xhr = new XMLHttpRequest();
-	    			var url = "/TrackPetService/rest/pet/super"; //For Webapp-runner must go this root /rest/pet/insert
+	    			var url = "/rest/pet/super"; //For Webapp-runner must go this root /rest/pet/insert
 	    		
 	    			//Send the proper header information along with the request
 	    			xhr.onreadystatechange = function() {//Call a function when the state changes.

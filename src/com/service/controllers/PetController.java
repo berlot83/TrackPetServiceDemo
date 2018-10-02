@@ -102,7 +102,7 @@ public class PetController implements Crud {
 	
 	/* Only for search improvement by name or other variable, not to insert and view at first time */
 	@GET
-	@Path("get")
+	@Path("/get")
 	@Override
 	public Document getPet(String name, String nameValue) {
 		Document result = null;
@@ -247,17 +247,11 @@ public class PetController implements Crud {
 
 	
 	@GET
-	@Path("token")
+	@Path("/test")
 	@Produces(MediaType.TEXT_HTML)
-	public String getMessage(@QueryParam("to") String header) {
-		//header = Base64.getEncoder().encodeToString(header.getBytes());
+	public String getMessage() {
 		
-//		if(header.equals("acepted")) {
-//			result = "Access granted";
-//		}else {
-//			result = "Access denied";
-//		}
-		return header;
+		return "Hello World";
 	}
 	
 	
