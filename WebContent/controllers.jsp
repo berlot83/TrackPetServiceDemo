@@ -7,36 +7,32 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <script type="text/javascript" src="src/js/ajaxCalls.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Mali:500" rel="stylesheet">
 
 <script type="text/javascript" src="src/js/various.js"></script>
 <link rel="stylesheet" type="text/css" href="src/css/index.css">
+<link rel="stylesheet" type="text/css" href="src/css/controllers.css">
 <link rel="stylesheet" type="text/css" href="src/css/maps.css">
-<link href="https://fonts.googleapis.com/css?family=Mali:500" rel="stylesheet">
 
 <script type="text/javascript">
 window.onbeforeunload = function(e) {
     return 'Please press the Logout button to logout.';
 };
 </script>
-
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 <title>Track Pet services Controller Page</title>
 </head>
-<body onload="advice(), initMap()"
-	style="">
+<body onload="advice(), initMap()" >
 <!-- background-image: url('src/img/pawbackground.png'); background-repeat: 'no-repeat'; background-attachment: fixed; -->
 	<!-- Star menu bar -->
 	<ul>
 		<li><a href="index.jsp">Inicio</a></li>
-		<li><a href="controllers.jsp">Veterinarias/revendedores</a></li>
 		<li><a href="#" onclick="contact()">Contacto</a></li>
 		<li><a href="#" onclick="about()">Sobre Nosotros</a></li>
-		<li><a href="#" onclick="about()">MolokoAccess</a></li>
-		<li><a href="#" onclick="reportPet()">Reportar una mascota</a></li>
+		<li><a href="/TrackPetService/molokoAccess.jsp" >MolokoAccess</a></li>
+<!-- 		<li><a href="#" onclick="reportPet()">Reportar una mascota</a></li> -->
 	</ul>
 	<!-- End menu bar -->
-
-
-
 
 	<div id="divContent" style="padding-left: 50px; padding-right: 50px;">
 		<div class="row">
@@ -44,11 +40,12 @@ window.onbeforeunload = function(e) {
 			<div class="col-8">
 				<h2 style="text-align: center">Servicio de información de mascotas</h2>
 					<h4 style="text-align: center;">"Alta de Mascota"</h4>
+				<h3>Datos de la mascota</h3>
+				<hr>
 				<div class="form-group">
 					<label for="raze">Raza</label>
 
 					<!-- Start selector raze -->
-
 					<select class="form-control" id="raze">
 						<option value="Otra" selected>Otra</option>
 						<option value="Mestizo">Mestizo</option>
@@ -100,7 +97,7 @@ window.onbeforeunload = function(e) {
 
 				<div class="form-group">
 					<label for="name">Nombre</label> <input type="text" id="name"
-						placeholder="name" class="form-control" />
+						placeholder="Nombre de la mascota" class="form-control" />
 				</div>
 				<div class="form-group">
 					<label for="age">Edad</label><div id="resultAge"></div> 
@@ -149,37 +146,93 @@ window.onbeforeunload = function(e) {
 				</script>
 				
 				</div>
+				
+								<div class="form-group">
+					<label for="illness">Sufre alguna efermedad</label>
+				<!-- Start select age -->
+					<select class="form-control" id="illness">
+						<option value="Ninguna">Ninguna</option>
+						<option value="Gastritis">Gastritis</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="clinicHistory">Historia Clínica</label>
+					<textarea id="clinicHistory" placeholder="Historia Clínica" rows="9" class="form-control"></textarea>
+				</div>
+				<div class="form-group">
+					<label for="medicated">Está medicado</label>		
+						<!-- Start select Medicated -->
+					<select class="form-control" id="medicated">
+						<option value= true>Sí</option>
+						<option value= false>No</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="status">Estado</label>
+						<!-- Start select status -->
+					<select class="form-control" id="status">
+						<option value= true>Normal</option>
+						<option value= false>Perdido</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="subscription">Subscripción</label>
+						<!-- Start select subscription -->
+					<select class="form-control" id="subscription">
+						<option value= true>Sí</option>
+						<option value= false>No</option>
+					</select>
+				</div>
+
+				<h3>Datos del Tutor</h3>
+				<hr>
+				<div class="form-group">
+					<label for="ownerName">Nombre</label> <input type="text"
+						id="ownerName" placeholder="Nombre del cuidador" class="form-control" />
+				</div>
+				
+				<div class="form-group">
+					<label for="ownerLastname">Apellido</label> <input type="text"
+						id="ownerLastname" placeholder="Apellido del cuidador" class="form-control" />
+				</div>
+				
+				<div class="form-group">
+					<label for="ownerDni">D.N.I</label> <input type="number"
+						id="ownerDni" placeholder="DNI del cuidador" class="form-control" />
+				</div>
+				
+				<div class="form-group">
+					<label for="phone1">Teléfono</label> <input type="number"
+						id="phone1" placeholder="Teléfono primario" class="form-control" />
+				</div>
+				<div class="form-group">
+					<label for="phone2">Teléfono</label> <input type="number"
+						id="phone2" placeholder="Teléfono secundario" class="form-control" />
+				</div>
+				
 				<div class="form-group">
 					<label for="street1">Dirección principal (Dirección altura, localidad, provincia)</label>
-					<input type="text" id="street1" placeholder="street1"
+					<input type="text" id="street1" placeholder="Av. Libertador 650, Buenos Aires, Argentina"
 						class="form-control" />
 				</div>
 				
 				<!-- Map Start -->
 				<div id="map"></div>
 				<!-- Map End -->
+				<br>
+				<div class="form-group">
+<!-- 				<button id="send" class="btn btn-danger" onclick="insertPet()" >Almacenar datos -->
+<!-- 					y crear Código QR</button> -->
 				
-				<div class="form-group">
-					<label for="phone1">Teléfono</label> <input type="number"
-						id="phone1" placeholder="phone1" class="form-control" />
+				<button id="send" class="btn btn-danger" onclick="loginAndInsert()" >Almacenar datos y crear Código QR</button>
 				</div>
-				<div class="form-group">
-					<label for="phone2">Teléfono</label> <input type="number"
-						id="phone2" placeholder="phone2" class="form-control" />
-				</div>
-				<div class="form-group">
-					<label for="illness">Sufre alguna efermedad</label> <input
-						type="text" id="illness" placeholder="illness"
-						class="form-control" />
-				</div>
-				<button id="send" class="btn btn-danger" onclick="insertPet()">Almacenar datos
-					y crear Código QR</button>
-
 					<h4>Etiqueta QR:</h4>
 				<hr>
 				<div id="qrResult" style="text-align: center;">
+				<br>
 					<!-- Ajax call response from endpoint with qrCodeImages -->
 					<div id="downloadButtonDiv"></div>
+				<br>
 				</div>
 				<hr>
 				<img alt="" src="src/img/pet1.jpg" class="img-fluid w-100, rounded">
@@ -192,10 +245,6 @@ window.onbeforeunload = function(e) {
 			<div class="col-2"></div>
 		</div>
 	</div>
-
-			
-
-				
 	
 	<!-- Start Google Maps Javascript -->
 </body>

@@ -1,15 +1,25 @@
 package com.service.controllers;
 
 import java.io.IOException;
+import java.util.Base64;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
+
 import org.bson.Document;
+import org.glassfish.grizzly.http.util.Header;
+
 import com.google.gson.Gson;
 import com.google.zxing.WriterException;
 import com.mongodb.client.FindIterable;
@@ -18,6 +28,7 @@ import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.service.dao.ConnectionMongoDB;
 import com.service.dao.Crud;
+import com.service.model.Admin;
 import com.service.model.Pet;
 
 @Path("/pet")
@@ -27,6 +38,7 @@ public class PetController implements Crud {
 	MongoDatabase connectNow;
 	{
 		connectNow = ConnectionMongoDB.connectNow();
+		
 	}
 	
 	@POST
@@ -34,13 +46,14 @@ public class PetController implements Crud {
 	@Produces("application/json")
 	@Consumes("application/x-www-form-urlencoded")
 	@Override
-	public String insertPet(@FormParam("raze") String raze, @FormParam("name") String name, @FormParam("age") int age, @FormParam("street1") String street1, @FormParam("phone1") String phone1, @FormParam("phone2") String phone2, @FormParam("illness") String illness) {
+	public String insertPet(@FormParam("user") String user,@FormParam("raze") String raze, @FormParam("name") String name, @FormParam("age") int age, @FormParam("ownerName") String ownerName,  @FormParam("ownerLastname") String ownerLastname,  @FormParam("ownerDni") String ownerDni, @FormParam("street1") String street1, @FormParam("phone1") String phone1, @FormParam("phone2") String phone2,  @FormParam("clinicHistory") String clinicHistory, @FormParam("illness") String illness,  @FormParam("medicated") boolean medicated,  @FormParam("status") boolean status,  @FormParam("subscription") boolean subscription, @FormParam("collection") String collection) {
+		
 		/* String response */
 		String response = null;
 		
 		/* Declares Json and create a new Pet to insert data */
 		Gson gson = new Gson();
-		Pet pet = new Pet(raze, name, age,street1, phone1, phone2, illness);
+		Pet pet = new Pet(raze, name, age, ownerName, ownerLastname, ownerDni,street1, phone1, phone2, clinicHistory, illness, medicated, status, subscription);
 		
 		/* Add all data needed formatted to Json String */
 		String json = gson.toJson(pet);
@@ -55,15 +68,21 @@ public class PetController implements Crud {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			MongoCollection<Document> table = connectNow.getCollection("pets");
+			MongoCollection<Document> table = connectNow.getCollection(user);
 			Document document = new Document();
 			document.append("raze", raze);
 			document.append("name", name);
 			document.append("age", age);
+			document.append("ownerName", ownerName);
+			document.append("ownerLastname", ownerLastname);
+			document.append("ownerDni", ownerDni);
 			document.append("street1", street1);
 			document.append("phone1", phone1);
 			document.append("phone2", phone2);
 			document.append("illness", illness);
+			document.append("medicated", medicated);
+			document.append("status", status);
+			document.append("subscription", subscription);
 			document.append("toBase64QRCode", toBase64QRCode );
 			document.append("createdDate", new Date());
 			table.insertOne(document);
@@ -104,7 +123,6 @@ public class PetController implements Crud {
 	return result;
 	}
 
-	
 	@Override
 	public Pet updatePet() {
 		return null;
@@ -114,8 +132,100 @@ public class PetController implements Crud {
 	public void deletePet() {
 	}
 	
-	public String createQRFromPet(String data){
+	@POST
+	@Path("/admin")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getLoginAdmin(@FormParam("user") String user, @FormParam("password") String password) {
 		
+		Document result = null;
+		String response = null;
+		try{
+			MongoCollection<Document> table = connectNow.getCollection("admins");
+			FindIterable<Document> findIterable = table.find();
+			MongoCursor<Document> cursor = findIterable.iterator();
+			
+			while(cursor.hasNext()) {
+				result = cursor.next();
+				response = result.toJson();
+				
+				if(result.containsValue(user) && result.containsValue(password)) {
+					response = Boolean.TRUE.toString();
+					System.out.println(response);
+					break;
+				}else {
+					response = Boolean.FALSE.toString();
+				}	
+			}		
+		}catch(Exception ex) {	
+			System.out.println("Enter to Exception");
+		}
+	return response;
+	}
+	
+	@POST
+	@Path("/super")
+	@Produces("application/json")
+	@Consumes("application/x-www-form-urlencoded")
+	public String getLoginSuperAdmin(@FormParam("user") String user, @FormParam("password") String password) {
+		
+		Document result = null;
+		String response = null;
+		try{
+			MongoCollection<Document> table = connectNow.getCollection("super");
+			FindIterable<Document> findIterable = table.find();
+			MongoCursor<Document> cursor = findIterable.iterator();
+			
+			while(cursor.hasNext()) {
+				result = cursor.next();
+				response = result.toJson();
+				
+				String userDB = result.get("user").toString();
+				String passwordDB = result.get("password").toString();
+				
+				if(userDB.equals(user) && passwordDB.equals(password)) {
+					response = Boolean.TRUE.toString();
+					System.out.println(response);
+					break;
+				}else {
+					response = Boolean.FALSE.toString();
+					System.out.println(response);
+					break;
+				}
+				
+			}		
+		}catch(Exception ex) {	
+			System.out.println("Enter to Exception");
+		}
+	return response;
+	}
+	
+	/* On develop */
+	@GET
+	@Path("/info")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public String getAllInfo(String id) {
+		
+		Document result = null;
+		String response = null;
+		
+		try{
+			MongoCollection<Document> table = connectNow.getCollection("super");
+			FindIterable<Document> findIterable = table.find();
+			MongoCursor<Document> cursor = findIterable.iterator();
+			
+			while(cursor.hasNext()) {
+				result = cursor.next();
+				response = result.toJson();
+			}
+		}catch(Exception e) {
+			
+		}
+		return response;
+	}
+	
+	
+	
+	public String createQRFromPet(String data){	
 		byte[] resultToByte = null;
 		String toBase64 = null;
 		try {
@@ -135,4 +245,20 @@ public class PetController implements Crud {
 		return toBase64;
 	}
 
+	
+	@GET
+	@Path("token")
+	@Produces(MediaType.TEXT_HTML)
+	public String getMessage(@QueryParam("to") String header) {
+		//header = Base64.getEncoder().encodeToString(header.getBytes());
+		
+//		if(header.equals("acepted")) {
+//			result = "Access granted";
+//		}else {
+//			result = "Access denied";
+//		}
+		return header;
+	}
+	
+	
 }

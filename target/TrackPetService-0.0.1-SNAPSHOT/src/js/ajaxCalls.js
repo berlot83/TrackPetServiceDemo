@@ -4,20 +4,160 @@
  */
 
 /* File source Ajax calls */
+
+
+function loginAndInsert(){
+		
+	$.confirm({
+		type: 'blue',
+	    title: 'Login servicio de Etiquetas QR',
+	    content: '' +
+	    '<form action="" class="formName">' +
+	    '<div class="form-group">' +
+	    '<label>Usuario</label> <i class="fas fa-user" style="color:grey;"></i>' +
+	    '<input type="text" id="user" placeholder="Usuario" class="name form-control" required />' +
+	    '</div>' +
+	    '<div class="form-group">' +
+	    '<label>Password</label> <i class="fas fa-lock" style="color:grey;"></i>' +
+	    '<input type="password" id="password" placeholder="Pass" class="name form-control" required />' +
+	    '</div>' +
+	    '</form>',
+	    buttons: {
+	        formSubmit: {
+	            text: 'Login',
+	            btnClass: 'btn-blue',
+	            action: function () {
+	            	
+	            	//		Ajax call
+	    			var user = document.getElementById("user").value;
+	    			var password = document.getElementById("password").value;
+	    			
+	    			var xhr = new XMLHttpRequest();
+	    			var url = "/TrackPetService/rest/pet/admin"; //For Webapp-runner must go this root /rest/pet/insert
+	    		
+	    			//Send the proper header information along with the request
+	    			xhr.onreadystatechange = function() {//Call a function when the state changes.
+	    			    if(xhr.readyState == 4 && xhr.status == 200) {
+	    			    
+	    			    	if(xhr.responseText == "true"){
+	    			
+/* Start insertPet() */	    			    		
+	    			    		console.log("Hola mundo");
+	    			    		var raze = document.getElementById("raze");
+	    			    		var name = document.getElementById("name");
+	    			    		var age = document.getElementById("age");
+	    			    		var ownerName = document.getElementById("ownerName");
+	    			    		var ownerLastname = document.getElementById("ownerLastname");
+	    			    		var ownerDni = document.getElementById("ownerDni");
+	    			    		var street1 = document.getElementById("street1");
+	    			    		var phone1 = document.getElementById("phone1");
+	    			    		var phone2 = document.getElementById("phone2");
+	    			    		var clinicHistory = document.getElementById("clinicHistory");
+	    			    		var illness = document.getElementById("illness");
+	    			    		var medicated = document.getElementById("medicated");
+	    			    		var status = document.getElementById("status");
+	    			    		var subscription = document.getElementById("subscription");
+	    			    		
+	    			    		var xhr1 = new XMLHttpRequest();
+	    			    		var url = "/TrackPetService/rest/pet/insert"; //For Webapp-runner must go this root /rest/pet/insert
+
+	    			    		//Send the proper header information along with the request
+	    			    		xhr1.onreadystatechange = function() {//Call a function when the state changes.
+	    			    		    if(xhr1.readyState == 4 && xhr1.status == 200) {
+	    			    		  
+	    			    		    	/* On Controllers page to show QR tag generated */
+	    			    		    	var createImage = document.createElement("img");
+	    			    		    	var divResult = document.getElementById("qrResult");	    	
+	    			    		    	var attribute = document.createAttribute("src");
+	    			    		    	attribute.value = "data:image/png;base64, "+xhr1.responseText;
+	    			    		    	createImage.setAttributeNode(attribute);
+	    			    		    	divResult.appendChild(createImage);
+	    			    		    	
+	    			    		    	var link = document.createElement("a");
+	    			    		    	var hrefAttribute = document.createAttribute("href");
+	    			    		    	hrefAttribute.value = "google.com.ar";
+	    			    		    	link.setAttributeNode(hrefAttribute);
+	    			    		    	link.setAttribute('download', name+'_'+ownerName+'_'+ownerLastname+'_'+'.jpg');
+	    			    		    	link.setAttribute('target', '_blank');
+	    			    		    	
+	    			    		    	var button = document.createElement("button");
+
+	    			    		    	var classAttribute = document.createAttribute("class");
+	    			    		    	classAttribute.value = "btn btn-primary";
+	    			    		    	button.setAttributeNode(classAttribute);
+	    			    		    	button.setAttribute("id", "download");
+	    			    		    	
+	    			    		    	var download = document.getElementById("download");
+	    			    		    	
+	    			    		    	button.innerHTML = "Descarga";
+	    			    		    	var downloadButtonDiv = document.getElementById("downloadButtonDiv");
+	    			    		    	downloadButtonDiv.appendChild(button);
+	    			    		    	
+	    			    		    	button.appendChild(link);
+	    			    		    	
+	    			    		    	
+	    			    		    }
+	    			    		}
+	    			    		xhr1.open("POST", url, true);
+	    			    		xhr1.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	    			    		xhr1.send("user="+user+"&raze="+raze.value+"&name="+name.value+"&age="+age.value+"&ownerName="+ownerName.value+"&ownerLastname="+ownerLastname.value+"&ownerDni="+ownerDni.value+"&street1="+street1.value+"&phone1="+phone1.value+"&phone2="+phone2.value+"&clinicHistory="+clinicHistory.value+"&illness="+illness.value+"&medicated="+medicated.value+"&status="+status.value+"&subscription="+subscription.value);
+
+	    			    	}else{
+			                	$.alert({type: 'red',
+			                			 title:'Error de logueo ',
+			                			 content:"El usuario o password parecen no ser correctos, Si usted es un usuario nuevo comuniquese a <a href='mailto:info@molokotech.com'>info@molokotech.com</a> "});
+			                		
+			                	}	
+	    			    }
+	    			}
+	    			xhr.open("POST", url, true);
+	    			xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	    			xhr.send("user="+user+"&password="+password);
+	    	//		Ajax Call
+	    	/* End insertPet() */
+	    			
+		            }
+	            
+	        },
+	        cancel: function () {
+	            //close
+	        },
+	    },
+	    onContentReady: function () {
+	        // bind to events
+	        var jc = this;
+	        this.$content.find('form').on('submit', function (e) {
+	            // if the user submits the form by pressing enter in the field.
+	            e.preventDefault();
+	            jc.$$formSubmit.trigger('click'); // reference the button and click it
+	        });
+	    }
+	});
+}
+
+
+
+
 function insertPet(){
+	
 	console.log("Hola mundo");
 	var raze = document.getElementById("raze");
 	var name = document.getElementById("name");
 	var age = document.getElementById("age");
+	var ownerName = document.getElementById("ownerName");
+	var ownerLastname = document.getElementById("ownerLastname");
+	var ownerDni = document.getElementById("ownerDni");
 	var street1 = document.getElementById("street1");
-	var street2 = document.getElementById("street2");
-	var city = document.getElementById("city");
 	var phone1 = document.getElementById("phone1");
 	var phone2 = document.getElementById("phone2");
+	var clinicHistory = document.getElementById("clinicHistory");
 	var illness = document.getElementById("illness");
+	var medicated = document.getElementById("medicated");
+	var status = document.getElementById("status");
+	var subscription = document.getElementById("subscription");
 	
 	var xhr = new XMLHttpRequest();
-	var url = "/rest/pet/insert"; //For Webapp-runner must go this root /rest/pet/insert
+	var url = "/TrackPetService/rest/pet/insert"; //For Webapp-runner must go this root /rest/pet/insert
 
 	//Send the proper header information along with the request
 	xhr.onreadystatechange = function() {//Call a function when the state changes.
@@ -50,12 +190,14 @@ function insertPet(){
 	    	
 	    	button.appendChild(link);
 	    	
+	    	
 	    }
 	}
 	xhr.open("POST", url, true);
 	xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xhr.send("raze="+raze.value+"&name="+name.value+"&age="+age.value+"&street1="+street1.value+"&phone1="+phone1.value+"&phone2="+phone2.value+"&illness="+illness.value);
+	xhr.send("raze="+raze.value+"&name="+name.value+"&age="+age.value+"&ownerName="+ownerName.value+"&ownerLastname="+ownerLastname.value+"&ownerDni="+ownerDni.value+"&street1="+street1.value+"&phone1="+phone1.value+"&phone2="+phone2.value+"&clinicHistory="+clinicHistory.value+"&illness="+illness.value+"&medicated="+medicated.value+"&status="+status.value+"&subscription="+subscription.value);
 }
+
 
 function advice(){
 $.alert({
@@ -63,4 +205,75 @@ $.alert({
     title: 'Etiqueta QR',
     content: 'Recuerde que cuando toque crear y enviar debe descargar la imagen QR para luego utilizarla, si no se realiza esa accion y se recarga la pagina hay que cargar los datos de nuevo.',
 });
+}
+
+
+
+
+function loginToMolokoAccess(){
+		
+	$.confirm({
+		type: 'red',
+	    title: 'Super Admin <i class="fas fa-lock" style="color:grey;"></i>',
+	    content: '' +
+	    '<form action="" class="formName">' +
+	    '<div class="form-group">' +
+	    '<label>Usuario</label>' +
+	    '<input type="text" id="superUser" placeholder="Administrador" class="name form-control" required />' +
+	    '</div>' +
+	    '<div class="form-group">' +
+	    '<label>Password</label>' +
+	    '<input type="password" id="superPassword" placeholder="Pass" class="name form-control" required />' +
+	    '</div>' +
+	    '</form>',
+	    buttons: {
+	        formSubmit: {
+	            text: 'Login',
+	            btnClass: 'btn-blue',
+	            action: function () {
+	            	
+	            	//		Ajax call
+	    			var user = document.getElementById("superUser");
+	    			var password = document.getElementById("superPassword");
+	    			console.log(user);
+	    			console.log(password);
+	    			var xhr = new XMLHttpRequest();
+	    			var url = "/TrackPetService/rest/pet/super"; //For Webapp-runner must go this root /rest/pet/insert
+	    		
+	    			//Send the proper header information along with the request
+	    			xhr.onreadystatechange = function() {//Call a function when the state changes.
+	    			    if(xhr.readyState == 4 && xhr.status == 200) {
+	    			    
+	    			    	console.log(xhr.responseText);
+	    			    	if(xhr.responseText == "true"){
+			                    window.location.replace("/TrackPetService/controllers.jsp");
+			                }else{
+			                	$.alert({	type: "red",
+			                				title: "Error de logueo <i class='fas fa-exclamation-triangle' style='color:red'></i>",
+			                				content:"Este apartado es de uso interno de la empresa.\nSi desea ingresar datos a la Cloud dirijase a <a href='/TrackPetService/controllers.jsp'>Crear etiqueta QR</a>"});
+			                }	
+	    			    }
+	    			}
+	    			xhr.open("POST", url, true);
+	    			xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	    			xhr.send("user="+user.value+"&password="+password.value);
+	    	//		Ajax Call
+	    			
+		            }
+	            
+	        },
+	        cancel: function () {
+	            //close
+	        },
+	    },
+	    onContentReady: function () {
+	        // bind to events
+	        var jc = this;
+	        this.$content.find('form').on('submit', function (e) {
+	            // if the user submits the form by pressing enter in the field.
+	            e.preventDefault();
+	            jc.$$formSubmit.trigger('click'); // reference the button and click it
+	        });
+	    }
+	});
 }

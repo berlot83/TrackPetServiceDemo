@@ -10,6 +10,7 @@
 <link rel="stylesheet" type="text/css" href="src/css/molokoAccess.css">
 <script type="text/javascript" src="src/js/ajaxCalls.js"></script>
 <script type="text/javascript" src="src/js/various.js"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 <title>Molokotech Acceso privado</title>
 </head>
 
@@ -18,34 +19,34 @@
 <!-- Star menu bar -->
 <ul>
   <li><a href="index.jsp">Inicio</a></li>
-  <li><a href="#" onclick="login()" >Veterinarias/revendedores</a></li>
+  <li><a href="/TrackPetService/controllers.jsp" onclick="#" >QR-Clientes</a></li>
   <li><a href="#" onclick="contact()" >Contacto</a></li>
   <li><a href="#" onclick="about()" >Sobre Nosotros</a></li>
-  <li><a href="#" onclick="about()" >MolokoAccess</a></li>
   <li><a href="#" onclick="reportPet()" >Reportar una mascota</a></li>
   
 </ul>
 <!-- End menu bar -->
 
-<div id="insertNewClientDiv">
-	<div class="row" style="padding: 5%; font-family: 'Pacifico', cursive;">
-		<div class="col-6" style="color:Turquoise; text-shadow: 0px 0px 4px rgba(0, 0, 0, 1);">
-		<h2 style="font-family: 'Pacifico', cursive; color:'Orchid'; text-align:center;">Agregar nuevo Cliente a la DB</h2>
-		<h4 style="color:Turquoise; text-align:center;">"Alta de Cliente"</h4>
-			<div class="form-group" style="color:Turquoise;">
-				<label for="email">Email</label> <input type="text" id="email"
-					placeholder="Email" class="form-control" />
+<div>
+	<div class="row">
+	<div class="col-2"></div>
+		<div class="col-8">
+		<h2 style="text-align:center" >Agregar nuevo Cliente a la DB</h2>
+		<h4 style="text-align:center;">"Alta de Cliente"</h4>
+			<div class="form-group">
+				<label for="usuario">Usuario </label>
+				<i class="fas fa-user" style="color:grey;"></i>
+				<input type="text" id="user" placeholder="Usuario" class="form-control">
 			</div>
-			<div class="form-group" style="color:Turquoise;">
-				<label for="password">Password</label> <input type="text" id="password"
-					placeholder="password" class="form-control" />
+			<div class="form-group">
+				<label for="password">Password </label>
+				<i class="fas fa-lock" style="color:grey;"></i>
+				<input type="password" id="password" placeholder="Password" class="form-control">
+				
 			</div>
-			<div class="form-group" style="color:Turquoise;">
-				<label for="quantity">Espacios en DB</label> <input type="number" id="quantity"
-					placeholder="quantity" class="form-control" />
-			</div>
-			<button id="send" class="btn btn-primary" onclick="insertNewClient()">Insertar nuevo cliente</button>
+			<button id="send" class="btn btn-primary" onclick="loginToMolokoAccess()" >Insertar nuevo cliente</button>
 		</div>
+		<div class="col-2"></div>
 	</div>
 </div>
 

@@ -20,13 +20,24 @@
              	<param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
              	<param-value>com.service.controllers.PetController</param-value><!-- TrackPetService -->
        </init-param>
-       
-   <load-on-startup>1</load-on-startup>
 
+   <load-on-startup>1</load-on-startup>
+   
 </servlet>
+   
+<!-- <error-page> -->
+<!--     <location>/error.jsp</location> -->
+<!-- </error-page> -->
+
+<!-- <error-page> -->
+<!--     Missing login -->
+<!--     <error-code>405</error-code> -->
+<!--     <location>/error.jsp</location> -->
+<!-- </error-page> -->
     
  <servlet-mapping>
         		<servlet-name>TrackPetService</servlet-name>
         		<url-pattern>/rest/*</url-pattern>
  </servlet-mapping>
+
 </web-app>

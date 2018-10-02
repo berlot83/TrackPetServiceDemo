@@ -29,18 +29,48 @@ function redirectTo(){
 	window.location.href="http://molokotech.com";
 }
 
-function login(){
+function test(){
+	
+	var xhr = new XMLHttpRequest();
+	var url = "/TrackPetService/rest/pet/tost"; //For Webapp-runner must go this root /rest/pet/insert
+
+	//Send the proper header information along with the request
+	xhr.onreadystatechange = function() {//Call a function when the state changes.
+	    
+		if(xhr.readyState == 4 && xhr.status == 200) {
+	    
+			if(xhr.responseText){
+				xhr.setRequestHeader("token", "acepted");
+				console.log(xhr.responseText);
+			}else{
+				console.log(xhr.responseText);
+			}
+			
+	    }
+	}
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xhr.send("user="+user+"&password="+password);
+//		Ajax Call
+}
+    
+
+
+
+
+function loginToControllers(){
+		
 	$.confirm({
 	    title: 'Login servicio de Etiquetas QR',
 	    content: '' +
 	    '<form action="" class="formName">' +
 	    '<div class="form-group">' +
-	    '<label>Email</label>' +
-	    '<input type="text" id="name" placeholder="Email" class="name form-control" required />' +
+	    '<label>Usuario</label>' +
+	    '<input type="text" id="user" placeholder="Usuario" class="name form-control" required />' +
 	    '</div>' +
 	    '<div class="form-group">' +
 	    '<label>Password</label>' +
-	    '<input type="text" id="password" placeholder="Pass" class="name form-control" required />' +
+	    '<input type="password" id="password" placeholder="Pass" class="name form-control" required />' +
 	    '</div>' +
 	    '</form>',
 	    buttons: {
@@ -48,13 +78,35 @@ function login(){
 	            text: 'Login',
 	            btnClass: 'btn-blue',
 	            action: function () {
-	                var name = this.$content.find('.name').val();
-	                if(!name){
-	                    $.alert('provide a valid name');
-	                    return false;
-	                }
-	                $.alert('Your name is ' + name);
-	            }
+	            	
+	            	//		Ajax call
+	    			var user = document.getElementById("user").value;
+	    			var password = document.getElementById("password").value;
+	    			
+	    			var xhr = new XMLHttpRequest();
+	    			var url = "/TrackPetService/rest/pet/admin"; //For Webapp-runner must go this root /rest/pet/insert
+	    		
+	    			//Send the proper header information along with the request
+	    			xhr.onreadystatechange = function() {//Call a function when the state changes.
+	    			    if(xhr.readyState == 4 && xhr.status == 200) {
+	    			    
+	    			    	
+	    			    	if(xhr.responseText == "true"){
+			                    console.log(user);
+			                    console.log(password);
+			                    window.location.replace("/TrackPetService/controllers.jsp");
+			                }else{
+			                	$.alert("El usuario o password parecen no ser correctos, Si usted es un usuario nuevo comuniquese a <a href='mailto:info@molokotech.com'>info@molokotech.com</a> ");
+			                }	
+	    			    }
+	    			}
+	    			xhr.open("POST", url, true);
+	    			xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	    			xhr.send("user="+user+"&password="+password);
+	    	//		Ajax Call
+	    			
+		            }
+	            
 	        },
 	        cancel: function () {
 	            //close

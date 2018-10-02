@@ -1,7 +1,6 @@
 @charset "ISO-8859-1";
 
 body {
-	/* background-image: url("../img/pawbackground.png"); */
 	font-family: 'Mali', cursive;
 	text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.3);
 	background: linear-gradient(90deg, skyblue, transparent),
@@ -31,6 +30,7 @@ li a {
 /* Change the link color to #111 (black) on hover */
 li a:hover {
 	background-color: #111;
+	color: lightblue;
 }
 
 #carouselExampleControls {
@@ -51,10 +51,10 @@ li a:hover {
 #infoDiv {
 	text-align: justify;
 	background: white;
-	border-radius: 15px;
-	box-shadow: 0px 0px 20px black;
+	border-radius: 10px;
+	box-shadow: 0px 0px 10px black;
 }
 
 a:link {
-	color: lightblue;
+	color: coral;
 }

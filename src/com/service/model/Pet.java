@@ -8,27 +8,33 @@ public class Pet {
 	private String ownerLastname;
 	private String ownerDni;
 	private String street1;
-	private String street2;
-	private String city;
 	private String phone1;
 	private String phone2;
 	private String clinicHistory;
 	private String illness;
 	private boolean medicated;
-	private boolean premium;
+	private boolean status;
+	private boolean subscription;
 	
 	public Pet() {
 		
 	}
 	
-	public Pet(String raze, String name, int age, String street1, String phone1, String phone2, String illness) {
+	public Pet(String raze, String name, int age, String ownerName, String ownerLastname, String ownerDni, String street1, String phone1, String phone2, String clinicHistory,  String illness, boolean medicated, boolean status, boolean subscription) {
 		this.raze = raze;
 		this.name = name;
 		this.age = age;
+		this.ownerName = ownerName;
+		this.ownerLastname = ownerLastname;
+		this.ownerDni = ownerDni;
 		this.street1 = street1;
 		this.phone1 = phone1;
 		this.phone2 = phone2;
+		this.clinicHistory = clinicHistory;
 		this.illness = illness;
+		this.medicated = medicated;
+		this.status = status;
+		this.subscription = subscription;
 	}
 
 	public String getRaze() {
@@ -63,28 +69,12 @@ public class Pet {
 		this.street1 = street1;
 	}
 
-	public String getStreet2() {
-		return street2;
-	}
-
-	public void setStreet2(String street2) {
-		this.street2 = street2;
-	}
-
 	public String getIllness() {
 		return illness;
 	}
 
 	public void setIllness(String illness) {
 		this.illness = illness;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
 	}
 
 	public String getPhone1() {
@@ -119,14 +109,6 @@ public class Pet {
 		this.medicated = medicated;
 	}
 
-	public boolean isPremium() {
-		return premium;
-	}
-
-	public void setPremium(boolean premium) {
-		this.premium = premium;
-	}
-
 	public String getOwnerName() {
 		return ownerName;
 	}
@@ -149,5 +131,21 @@ public class Pet {
 
 	public void setOwnerDni(String ownerDni) {
 		this.ownerDni = ownerDni;
+	}
+
+	public boolean isStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+
+	public boolean isSubscription() {
+		return subscription;
+	}
+
+	public void setSubscription(boolean subscription) {
+		this.subscription = subscription;
 	}
 }

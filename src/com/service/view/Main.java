@@ -10,7 +10,7 @@ public class Main {
 		/* Only to Test-ones */
 		
 		PetController pc = new PetController();
-
+		System.out.println(pc.getLoginAdmin("veterinaria", "123456"));
 		}
 
 }
