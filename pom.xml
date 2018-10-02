@@ -19,10 +19,10 @@
         <artifactId>maven-war-plugin</artifactId>
         <version>3.0.0</version>
         <configuration>
-<!--         <webappDirectory>WebContent</webappDirectory> -->
+        <webappDirectory>WebContent</webappDirectory>
           <warSourceDirectory>WebContent</warSourceDirectory>
           <failOnMissingWebXml>false</failOnMissingWebXml>
-            <webappDirectory>/rest/</webappDirectory>
+<!--             <webappDirectory>/rest/</webappDirectory> -->
         </configuration>
       
       </plugin>
