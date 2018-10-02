@@ -22,7 +22,7 @@
 <!--         <webappDirectory>WebContent</webappDirectory> -->
           <warSourceDirectory>WebContent</warSourceDirectory>
           <failOnMissingWebXml>false</failOnMissingWebXml>
-<!--             <webappDirectory>/rest</webappDirectory> -->
+            <webappDirectory>/rest/</webappDirectory>
         </configuration>
       
       </plugin>
