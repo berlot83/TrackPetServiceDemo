@@ -29,7 +29,7 @@ window.onbeforeunload = function(e) {
 		<li><a href="index.jsp">Inicio</a></li>
 		<li><a href="#" onclick="contact()">Contacto</a></li>
 		<li><a href="#" onclick="about()">Sobre Nosotros</a></li>
-		<li><a href="/TrackPetService/molokoAccess.jsp" >MolokoAccess</a></li>
+		<li><a href="/molokoAccess.jsp" >MolokoAccess</a></li>
 <!-- 		<li><a href="#" onclick="reportPet()">Reportar una mascota</a></li> -->
 	</ul>
 	<!-- End menu bar -->
