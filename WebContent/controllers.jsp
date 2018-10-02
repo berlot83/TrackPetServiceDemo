@@ -30,7 +30,6 @@ window.onbeforeunload = function(e) {
 		<li><a href="#" onclick="contact()">Contacto</a></li>
 		<li><a href="#" onclick="about()">Sobre Nosotros</a></li>
 		<li><a href="/molokoAccess.jsp" >MolokoAccess</a></li>
-<!-- 		<li><a href="#" onclick="reportPet()">Reportar una mascota</a></li> -->
 	</ul>
 	<!-- End menu bar -->
 
@@ -147,9 +146,9 @@ window.onbeforeunload = function(e) {
 				
 				</div>
 				
-								<div class="form-group">
+				<div class="form-group">
 					<label for="illness">Sufre alguna efermedad</label>
-				<!-- Start select age -->
+					<!-- Start select age -->
 					<select class="form-control" id="illness">
 						<option value="Ninguna">Ninguna</option>
 						<option value="Gastritis">Gastritis</option>
