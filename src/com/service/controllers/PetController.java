@@ -193,19 +193,28 @@ public class PetController implements Crud {
 	@GET
 	@Path("/info")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public String getAllInfo(String id) {
+	public String getInfo(String id) {
 		
 		Document result = null;
 		String response = null;
 		
 		try{
-			MongoCollection<Document> table = connectNow.getCollection("super");
+			MongoCollection<Document> table = connectNow.getCollection("pets");
 			FindIterable<Document> findIterable = table.find();
 			MongoCursor<Document> cursor = findIterable.iterator();
 			
 			while(cursor.hasNext()) {
 				result = cursor.next();
 				response = result.toJson();
+				
+				System.out.println(result);
+				
+				if(result.get("id").toString().equals(id)) {
+					System.out.println("hay coincidencia: " + result.get("name").toString());
+					break;
+				}else {
+					System.out.println("No hay coincidencias");
+				}
 			}
 		}catch(Exception e) {
 			

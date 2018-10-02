@@ -17,7 +17,7 @@
 <!-- Star menu bar -->
 <ul>
   <li><a href="index.jsp">Inicio</a></li>
-  <li><a href="/TrackPetService/controllers.jsp" onclick="#" >QR-Clientes</a></li>
+  <li><a href="/controllers.jsp" onclick="#" >QR-Clientes</a></li>
   <li><a href="#" onclick="contact()" >Contacto</a></li>
   <li><a href="#" onclick="about()" >Sobre Nosotros</a></li>
   <li><a href="molokoAccess.jsp" >MolokoAccess</a></li>
