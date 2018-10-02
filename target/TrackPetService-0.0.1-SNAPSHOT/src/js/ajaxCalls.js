@@ -188,9 +188,7 @@ function insertPet(){
 	    	var downloadButtonDiv = document.getElementById("downloadButtonDiv");
 	    	downloadButtonDiv.appendChild(button);
 	    	
-	    	button.appendChild(link);
-	    	
-	    	
+	    	button.appendChild(link);	    	
 	    }
 	}
 	xhr.open("POST", url, true);
