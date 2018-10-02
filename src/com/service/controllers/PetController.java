@@ -1,25 +1,16 @@
 package com.service.controllers;
 
 import java.io.IOException;
-import java.util.Base64;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.NoSuchElementException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
-import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
-
 import org.bson.Document;
-import org.glassfish.grizzly.http.util.Header;
-
 import com.google.gson.Gson;
 import com.google.zxing.WriterException;
 import com.mongodb.client.FindIterable;
@@ -28,7 +19,6 @@ import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.service.dao.ConnectionMongoDB;
 import com.service.dao.Crud;
-import com.service.model.Admin;
 import com.service.model.Pet;
 
 @Path("/pet")
