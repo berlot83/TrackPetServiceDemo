@@ -6,8 +6,8 @@
     <!-- Required meta tags -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link rel="stylesheet" type="text/css" href="src/css/index.css">
-<link rel="stylesheet" type="text/css" href="src/css/molokoAccess.css">
+<link rel="stylesheet" type="text/css" href="../src/css/index.css">
+<link rel="stylesheet" type="text/css" href="../src/css/molokoAccess.css">
 <script type="text/javascript" src="src/js/ajaxCalls.js"></script>
 <script type="text/javascript" src="src/js/various.js"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
@@ -19,7 +19,7 @@
 <!-- Star menu bar -->
 <ul>
   <li><a href="index.jsp">Inicio</a></li>
-  <li><a href="/TrackPetService/controllers.jsp" onclick="#" >QR-Clientes</a></li>
+  <li><a href="/controllers.jsp" onclick="#" >QR-Clientes</a></li>
   <li><a href="#" onclick="contact()" >Contacto</a></li>
   <li><a href="#" onclick="about()" >Sobre Nosotros</a></li>
   <li><a href="#" onclick="reportPet()" >Reportar una mascota</a></li>
