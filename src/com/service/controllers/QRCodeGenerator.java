@@ -32,8 +32,12 @@ public class QRCodeGenerator{
 		return i;
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws WriterException, IOException {
 	/* For console test porpuse only */
+		
+		byte[] qr = QRCodeGenerator.generateQRCodeImageToByte("https://pets2018.herokuapp.com/controllers.jsp", 300, 300);
+		String str64 = Base64.getEncoder().encodeToString(qr);
+		System.out.println(str64);
 	}
 
 }
