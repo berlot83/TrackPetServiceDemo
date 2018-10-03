@@ -1,6 +1,7 @@
 package com.service.controllers;
 
 import java.io.IOException;
+import java.net.ConnectException;
 import java.util.Date;
 import java.util.NoSuchElementException;
 import javax.ws.rs.Consumes;
@@ -206,38 +207,35 @@ public class PetController implements Crud {
 	@GET
 	@Path("/info")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getInfo(@QueryParam("name") String name, @QueryParam("ownerName") String ownerName, @QueryParam("ownerLastname") String ownerLastname) {
+	public String getInfo(@QueryParam("name") String name, @QueryParam("ownerName") String ownerName, @QueryParam("ownerLastname") String ownerLastname) throws ConnectException {
+		
+		String pivot = null;
 		String pivotName = null;
 		String pivotOwnerName = null;
 		String pivotOwnerLastname = null;
-		String pivot = null;
 		Document result = null;
 
-		try {
-			MongoCollection<Document> table = connectNow.getCollection("veterinaria");
-			FindIterable<Document> findIterable = table.find();
-			MongoCursor<Document> cursor = findIterable.iterator();
+		MongoCollection<Document> table = connectNow.getCollection("veterinaria");
+		FindIterable<Document> findIterable = table.find();
+		MongoCursor<Document> cursor = findIterable.iterator();
+		
+		while (cursor.hasNext()) {
+			result = cursor.next();
+			pivotName = result.get("name").toString();
+			pivotOwnerName = result.get("ownerName").toString();
+			pivotOwnerLastname = result.get("ownerLastname").toString();
 			
-			while (cursor.hasNext()) {
-				result = cursor.next();
-				pivotName = result.get("name").toString();
-				pivotOwnerName = result.get("ownerName").toString();
-				pivotOwnerLastname = result.get("ownerLastName").toString();
-				
-				System.out.println(pivotName);
-				System.out.println(pivotOwnerName);
-				System.out.println(pivotOwnerLastname);
-				
-				
+			System.out.println(pivotName);
+			System.out.println(pivotOwnerName);
+			System.out.println(pivotOwnerLastname);		
+			
 				if (pivotName.equals(name) ) {
-					pivot = result.toString();
+					pivot = result.toJson();
+					System.out.println("hay coincidencia");
 					break;
 				} else {
 					System.out.println("No hay coincidencias");
 				}
-			}
-		} catch (Exception e) {
-
 		}
 		return pivot;
 	}
