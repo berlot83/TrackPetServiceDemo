@@ -207,7 +207,7 @@ public class PetController implements Crud {
 	@GET
 	@Path("/info")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getInfo(@QueryParam("name") String name, @QueryParam("ownerName") String ownerName, @QueryParam("ownerLastname") String ownerLastname) throws ConnectException {
+	public String getInfo(@QueryParam("name") String name, @QueryParam("ownerName") String ownerName, @QueryParam("ownerLastname") String ownerLastname, @QueryParam("user") String user) throws ConnectException {
 		
 		String pivot = null;
 		String pivotName = null;
@@ -215,7 +215,7 @@ public class PetController implements Crud {
 		String pivotOwnerLastname = null;
 		Document result = null;
 
-		MongoCollection<Document> table = connectNow.getCollection("veterinaria");
+		MongoCollection<Document> table = connectNow.getCollection(user);
 		FindIterable<Document> findIterable = table.find();
 		MongoCursor<Document> cursor = findIterable.iterator();
 		
@@ -244,8 +244,8 @@ public class PetController implements Crud {
 	@GET
 	@Path("/url")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public String getURL(String name, String ownerName, String ownerLastname, String collection) {
-		return "https://pets2018.herokuapp.com/rest/pet/info?name="+name+"&ownerName="+ownerName+"&ownerLastname="+ownerLastname;
+	public String getURL(String name, String ownerName, String 	ownerLastname, String user) {
+		return "https://pets2018.herokuapp.com/rest/pet/info?name="+name+"&ownerName="+ownerName+"&ownerLastname="+ownerLastname+"&user="+user;
 	}
 
 	public String createQRFromPet(String data) {
@@ -272,7 +272,6 @@ public class PetController implements Crud {
 	@Path("/test")
 	@Produces(MediaType.TEXT_HTML)
 	public String getMessage() {
-
 		return "Hello World";
 	}
 
