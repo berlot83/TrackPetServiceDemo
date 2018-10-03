@@ -3,7 +3,11 @@ package com.service.controllers;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Base64;
+import java.util.EnumMap;
+import java.util.Map;
+
 import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
 import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
@@ -15,9 +19,17 @@ public class QRCodeGenerator{
 	public static byte[] generateQRCodeImageToByte(String text, int width, int height)
 			throws WriterException, IOException {
 		
+		/* Border size */
+		Map<EncodeHintType, Object> hints = new EnumMap<EncodeHintType, Object>(EncodeHintType.class);
+		hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
+		hints.put(EncodeHintType.MARGIN, 0); /* default = 4 */
+		/* Border size */
+		
+		
 		/* ZXing Matrix formatter */ 
 		QRCodeWriter qrCodeWriter = new QRCodeWriter();
-		BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, width, height);
+		BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, width, height, hints);
+		
 		
 		/* Manage the bytes for an output in this case byte[] */ 
 		ByteArrayOutputStream imageOut = new ByteArrayOutputStream();

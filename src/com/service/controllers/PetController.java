@@ -29,7 +29,6 @@ public class PetController implements Crud {
 	MongoDatabase connectNow;
 	{
 		connectNow = ConnectionMongoDB.connectNow();
-
 	}
 
 	@POST
@@ -50,23 +49,23 @@ public class PetController implements Crud {
 		String response = null;
 
 		/* Declares Json and create a new Pet to insert data */
-		Gson gson = new Gson();
-		Pet pet = new Pet(raze, name, age, ownerName, ownerLastname, ownerDni, street1, phone1, phone2, clinicHistory,
-				illness, medicated, status, subscription);
+//		Gson gson = new Gson();
+//		Pet pet = new Pet(raze, name, age, ownerName, ownerLastname, ownerDni, street1, phone1, phone2, clinicHistory,
+//				illness, medicated, status, subscription);
 
 		/* Add all data needed formatted to Json String */
-		String json = gson.toJson(pet);
+//		String json = gson.toJson(pet);
 		String toBase64QRCode = null;
 
 		/* Makes new Connection */
 		if (connectNow != null) {
 			PetController pc = new PetController();
-			try {
-				toBase64QRCode = pc.createQRFromPet(json);
-				System.out.println(toBase64QRCode);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+//			try {
+//				toBase64QRCode = pc.createQRFromPet(json);
+//				System.out.println(toBase64QRCode);
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
 			MongoCollection<Document> table = connectNow.getCollection(user);
 			Document document = new Document();
 			document.append("raze", raze);
@@ -89,6 +88,8 @@ public class PetController implements Crud {
 			/* Response */
 			response = "Console: Dato insertado";
 			System.out.println(response);
+			String url = pc.getURL(name, ownerName, ownerLastname, user);
+			toBase64QRCode = pc.createQRFromPet(url);
 		} else {
 
 			/* Response */
@@ -136,7 +137,7 @@ public class PetController implements Crud {
 
 	@POST
 	@Path("/admin")
-	@Produces(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_HTML)
 	public String getLoginAdmin(@FormParam("user") String user, @FormParam("password") String password) {
 
 		Document result = null;
@@ -201,26 +202,35 @@ public class PetController implements Crud {
 		return response;
 	}
 
-	/* Returns one result */
+	/* Returns one resultver aca */
 	@GET
 	@Path("/info")
-	@Consumes(MediaType.APPLICATION_JSON)
-	public String getInfo(@QueryParam("name") String name) {
-		
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getInfo(@QueryParam("name") String name, @QueryParam("ownerName") String ownerName, @QueryParam("ownerLastname") String ownerLastname) {
+		String pivotName = null;
+		String pivotOwnerName = null;
+		String pivotOwnerLastname = null;
 		String pivot = null;
 		Document result = null;
 
 		try {
-			MongoCollection<Document> table = connectNow.getCollection("pets");
+			MongoCollection<Document> table = connectNow.getCollection("veterinaria");
 			FindIterable<Document> findIterable = table.find();
 			MongoCursor<Document> cursor = findIterable.iterator();
-
+			
 			while (cursor.hasNext()) {
 				result = cursor.next();
-				pivot = result.get("name").toString();
+				pivotName = result.get("name").toString();
+				pivotOwnerName = result.get("ownerName").toString();
+				pivotOwnerLastname = result.get("ownerLastName").toString();
 				
-				if (pivot.equals(name)) {
-					pivot = result.toJson();
+				System.out.println(pivotName);
+				System.out.println(pivotOwnerName);
+				System.out.println(pivotOwnerLastname);
+				
+				
+				if (pivotName.equals(name) ) {
+					pivot = result.toString();
 					break;
 				} else {
 					System.out.println("No hay coincidencias");
@@ -230,6 +240,14 @@ public class PetController implements Crud {
 
 		}
 		return pivot;
+	}
+
+	/* Returns one result */
+	@GET
+	@Path("/url")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public String getURL(String name, String ownerName, String ownerLastname, String collection) {
+		return "https://pets2018.herokuapp.com/rest/pet/info?name="+name+"&ownerName="+ownerName+"&ownerLastname="+ownerLastname;
 	}
 
 	public String createQRFromPet(String data) {

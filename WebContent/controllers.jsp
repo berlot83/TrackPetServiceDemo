@@ -33,7 +33,7 @@ window.onbeforeunload = function(e) {
 	</ul>
 	<!-- End menu bar -->
 
-	<div id="divContent" style="padding-left: 50px; padding-right: 50px;">
+	<div id="divContent">
 		<div class="row">
 			<div class="col-2"></div>
 			<div class="col-8">
@@ -96,7 +96,7 @@ window.onbeforeunload = function(e) {
 
 				<div class="form-group">
 					<label for="name">Nombre</label> <input type="text" id="name"
-						placeholder="Nombre de la mascota" class="form-control" />
+						placeholder="Nombre de la mascota" class="form-control" required>
 				</div>
 				<div class="form-group">
 					<label for="age">Edad</label><div id="resultAge"></div> 
@@ -187,12 +187,12 @@ window.onbeforeunload = function(e) {
 				<hr>
 				<div class="form-group">
 					<label for="ownerName">Nombre</label> <input type="text"
-						id="ownerName" placeholder="Nombre del cuidador" class="form-control" />
+						id="ownerName" placeholder="Nombre del cuidador" class="form-control" required>
 				</div>
 				
 				<div class="form-group">
 					<label for="ownerLastname">Apellido</label> <input type="text"
-						id="ownerLastname" placeholder="Apellido del cuidador" class="form-control" />
+						id="ownerLastname" placeholder="Apellido del cuidador" class="form-control" required>
 				</div>
 				
 				<div class="form-group">
@@ -216,7 +216,7 @@ window.onbeforeunload = function(e) {
 				</div>
 				
 				<!-- Map Start -->
-				<div id="map"></div>
+				<div id="map" class="container-fluid"></div>
 				<!-- Map End -->
 				<br>
 				<div class="form-group">
