@@ -129,20 +129,6 @@ window.onbeforeunload = function(e) {
 						<option value="1995">1995</option>
 					</select>
 					<!-- End select age -->
-				<script type="text/javascript">
-				function age(){
-					var yearBirthay = document.getElementById("age");
-					var actualYear = (new Date()).getFullYear();
-					var age = actualYear - yearBirthay.value; 
-					
-					console.log(age);
-					
-					var resultAge = document.getElementById("resultAge");
-					
-					resultAge.innerHTML = "<h5><a href='#'><span class='badge badge-danger'>Edad actual de la mascota:  "+age+" años</span></a></h5>";
-				}
-				
-				</script>
 				
 				</div>
 				
@@ -152,8 +138,50 @@ window.onbeforeunload = function(e) {
 					<select class="form-control" id="illness">
 						<option value="Ninguna">Ninguna</option>
 						<option value="Gastritis">Gastritis</option>
+						<option value="Otitis">Otitis</option>
+						<option value="Moquillo">Moquillo</option>
+						<option value="Sarna">Sarna</option>
+						<option value="Parasitos">Parasitos</option>
+						<option value="Artrosis">Artrosis</option>
+						<option value="Parvovirus">Parvovirus</option>
+						<option value="Leishmaniosis">Leishmaniosis</option>
+						<option value="Coronavirus">Coronavirus</option>
+						<option value="Leptospirosis">Leptospirosis</option>
+						<option value="HepatitisVirica">HepatitisVirica</option>
+						<option value="Tumor">Tumor</option>
+						<option value="Mastitis">Mastitis</option>
+						<option value="Piometra">Piometra</option>
+						<option value="Alergias">Alergias</option>
+						<option value="TorsionGastrica">TorsionGastrica</option>
+						<option value="Otra">Otra</option>
 					</select>
 				</div>
+				
+				<div class="form-group">
+					<label class="checkbox-inline"><input type="checkbox" id="checkVaccines" onchange="checkVaccines()" value=true>Vacunas</label>
+				</div>
+				
+				<div class="form-group">
+					<label for="dateAntiRabicVaccine">Antirábica</label>
+					<input type="date" class="form-control" id="dateAntiRabicVaccine" disabled>
+				</div>
+				
+				<div class="form-group">
+					<label for="datePolivalentVaccine">Polivalente</label>
+					<input type="date" class="form-control" id="datePolivalentVaccine" disabled>
+				</div>
+				
+				<div class="form-group">
+					<label for="dateSextupleVaccine">Sextuple</label>
+					<input type="date" class="form-control" id="dateSextupleVaccine" disabled>
+				</div>
+				
+				<div class="form-group">
+					<label for="dateOctupleVaccine">Octuple</label>
+					<input type="date" class="form-control" id="dateOctupleVaccine" disabled>
+				</div>
+				
+				
 				<div class="form-group">
 					<label for="clinicHistory">Historia Clínica</label>
 					<textarea id="clinicHistory" placeholder="Historia Clínica" rows="9" class="form-control"></textarea>
@@ -170,8 +198,8 @@ window.onbeforeunload = function(e) {
 					<label for="status">Estado</label>
 						<!-- Start select status -->
 					<select class="form-control" id="status">
-						<option value= true>Normal</option>
-						<option value= false>Perdido</option>
+						<option value="true">Normal</option>
+						<option value="false">Perdido</option>
 					</select>
 				</div>
 				<div class="form-group">
@@ -207,6 +235,21 @@ window.onbeforeunload = function(e) {
 				<div class="form-group">
 					<label for="phone2">Teléfono</label> <input type="number"
 						id="phone2" placeholder="Teléfono secundario" class="form-control" />
+				</div>
+				
+				<div class="form-group">
+					<label for="email">Email</label> <input type="text"
+						id="email" placeholder="Email" class="form-control" />
+				</div>
+				
+				<div class="form-group">
+					<label for="facebook">Facebook</label> <input type="text"
+						id="facebook" placeholder="Como aparecés en Facebook o la dirección exacta." class="form-control" />
+				</div>
+				
+				<div class="form-group">
+					<label for="instagram">Instagram</label> <input type="text"
+						id="instagram" placeholder="Como aparecés en Instagram o la dirección exacta." class="form-control" />
 				</div>
 				
 				<div class="form-group">
@@ -251,7 +294,7 @@ window.onbeforeunload = function(e) {
 
 
 <!-- Javascript maps libraries -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDB_hzs9qAghUI1cOMXPae5Km72VFkYXKQ&libraries=places&callback=initMap"
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDFuQb3h_4AhG3Kmdf3NIz3aZfzsguDQOE&libraries=places&callback=initMap"
         async defer></script>
 <!-- Javascript maps libraries -->
 
@@ -259,13 +302,16 @@ window.onbeforeunload = function(e) {
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
 	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
 	crossorigin="anonymous">
+	
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
 	integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
 	crossorigin="anonymous"></script>
+	
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
 	integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
 	crossorigin="anonymous"></script>
+
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
 	integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
@@ -273,7 +319,8 @@ window.onbeforeunload = function(e) {
 
 <link charset="utf-8" rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
+
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
-	
+
 </html>

@@ -2,7 +2,11 @@ package com.service.controllers;
 
 import java.io.IOException;
 import java.net.ConnectException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.NoSuchElementException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
@@ -13,7 +17,14 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import org.bson.Document;
+import org.bson.types.ObjectId;
+
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.zxing.WriterException;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
@@ -21,7 +32,10 @@ import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.service.dao.ConnectionMongoDB;
 import com.service.dao.Crud;
+import com.service.model.Owner;
 import com.service.model.Pet;
+import com.service.utilities.PasswordGenerator;
+import com.sun.jersey.json.impl.provider.entity.JSONArrayProvider;
 
 @Path("/pet")
 public class PetController implements Crud {
@@ -34,39 +48,80 @@ public class PetController implements Crud {
 
 	@POST
 	@Path("/insert")
-	@Produces("application/json")
+	@Produces(MediaType.TEXT_HTML)
 	@Consumes("application/x-www-form-urlencoded")
 	@Override
 	public String insertPet(@FormParam("user") String user, @FormParam("raze") String raze,
 			@FormParam("name") String name, @FormParam("age") int age, @FormParam("ownerName") String ownerName,
 			@FormParam("ownerLastname") String ownerLastname, @FormParam("ownerDni") String ownerDni,
 			@FormParam("street1") String street1, @FormParam("phone1") String phone1,
-			@FormParam("phone2") String phone2, @FormParam("clinicHistory") String clinicHistory,
+			@FormParam("phone2") String phone2, @FormParam("email") String email, @FormParam("facebook") String facebook, @FormParam("instagram") String instagram, @FormParam("dateAntiRabicVaccine") String dateAntiRabicVaccine,@FormParam("datePolivalentVaccine") String datePolivalentVaccine, @FormParam("dateSextupleVaccine") String dateSextupleVaccine, @FormParam("dateOctupleVaccine") String dateOctupleVaccine, @FormParam("clinicHistory") String clinicHistory,
 			@FormParam("illness") String illness, @FormParam("medicated") boolean medicated,
 			@FormParam("status") boolean status, @FormParam("subscription") boolean subscription,
 			@FormParam("collection") String collection) {
 
 		/* String response */
-		String response = null;
-
-		/* Declares Json and create a new Pet to insert data */
-//		Gson gson = new Gson();
-//		Pet pet = new Pet(raze, name, age, ownerName, ownerLastname, ownerDni, street1, phone1, phone2, clinicHistory,
-//				illness, medicated, status, subscription);
-
-		/* Add all data needed formatted to Json String */
-//		String json = gson.toJson(pet);
-		String toBase64QRCode = null;
-
+		String result = null;
+		String responseToBase64 = null;
+		String stringToJson = null;
+		GsonBuilder builder = new GsonBuilder();
+		builder.excludeFieldsWithoutExposeAnnotation();
+		Gson gson = builder.create();
+		Pet pet = null;
+		
 		/* Makes new Connection */
-		if (connectNow != null) {
+		if (connectNow != null && !name.equals("") && !ownerName.equals("") && !ownerLastname.equals("")) {
 			PetController pc = new PetController();
-//			try {
-//				toBase64QRCode = pc.createQRFromPet(json);
-//				System.out.println(toBase64QRCode);
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
+
+			/* Setting Pet data for the request mandatory */
+			pet = new Pet();
+			pet.setName(name);
+			pet.setOwnerLastname(ownerLastname);
+			pet.setOwnerDni(ownerDni);
+			pet.setMessage("Descargar Pet-QR de Google Play");
+			//pet.setMessage("Para ver los datos importantes de este Código QR es necesario descargar la App QR-Pet de Molokotech.com, Google Play, pet-qr.com.");
+			pet.setCollection(user); /* Set collection, mandatory to select collection DB */
+			
+			/* Create String from a json adapted only for a few fields of the Pet.class */
+			stringToJson = gson.toJson(pet);
+			responseToBase64 = pc.createQRFromPet(stringToJson);
+					
+			/* Declare the instant of creation with a new Date() */
+			Date dateCreation = new Date();
+			
+			/* Convert the Date to a Instant.class to generate a pass or a Token to declare lost a Pet for the owner, 10 number digits */
+			String token = PasswordGenerator.genPass(dateCreation);
+			
+			String noDescription = "No declarado";
+			if(phone1 == null || phone1.equals("")) {
+				phone1 = noDescription;
+			}
+			if(phone2 == null || phone2.equals("")) {
+				phone2 = noDescription;
+			}
+			if(dateAntiRabicVaccine == null || dateAntiRabicVaccine.equals("")) {
+				dateAntiRabicVaccine = noDescription;
+			}
+			if(datePolivalentVaccine == null || datePolivalentVaccine.equals("")) {
+				datePolivalentVaccine = noDescription;
+			}
+			if(dateSextupleVaccine == null || dateSextupleVaccine.equals("")) {
+				dateSextupleVaccine = noDescription;
+			}
+			if(dateOctupleVaccine == null || dateOctupleVaccine.equals("")) {
+				dateOctupleVaccine = noDescription;
+			}
+			if(email == null || email.equals("")) {
+				email = noDescription;
+			}
+			if(facebook == null || facebook.equals("")) {
+				facebook = noDescription;
+			}
+			if(instagram == null || instagram.equals("")) {
+				instagram = noDescription;
+			}
+			
+			/* Connect to DB, append and execute method to insrte */
 			MongoCollection<Document> table = connectNow.getCollection(user);
 			Document document = new Document();
 			document.append("raze", raze);
@@ -75,31 +130,38 @@ public class PetController implements Crud {
 			document.append("ownerName", ownerName);
 			document.append("ownerLastname", ownerLastname);
 			document.append("ownerDni", ownerDni);
+			document.append("email", email);
+			document.append("facebook", facebook);
+			document.append("instagram", instagram);
 			document.append("street1", street1);
 			document.append("phone1", phone1);
 			document.append("phone2", phone2);
+			document.append("dateAntiRabicVaccine", dateAntiRabicVaccine);
+			document.append("datePolivalentVaccine", datePolivalentVaccine);
+			document.append("dateSextupleVaccine", dateSextupleVaccine);
+			document.append("dateOctupleVaccine", dateOctupleVaccine);
+			document.append("clinicHistory", clinicHistory);
 			document.append("illness", illness);
 			document.append("medicated", medicated);
 			document.append("status", status);
 			document.append("subscription", subscription);
-			document.append("toBase64QRCode", toBase64QRCode);
-			document.append("createdDate", new Date());
+			document.append("toBase64QRCode", responseToBase64);
+			document.append("createdDate", dateCreation);
+			document.append("token", token);
 			table.insertOne(document);
 
 			/* Response */
-			response = "Console: Dato insertado";
-			System.out.println(response);
-			String url = pc.getURL(name, ownerName, ownerLastname, user);
-			toBase64QRCode = pc.createQRFromPet(url);
+			result = "Console: Dato insertado";
+			
 		} else {
 
 			/* Response */
-			response = "Console: La insercci�n no pudo realizarse, probablemente haya un conflicto con la DB";
-			toBase64QRCode = response; // If goes wrong take the same value from response so server says cant do it;
-			System.out.println(response);
+			responseToBase64 = "No se realizó la operación por problema con la DB o controle haber completado nombre de la mascota, nombre, apellido y dni del tutor";
+			System.out.println(result);
 		}
-		return toBase64QRCode;
+		return responseToBase64;
 	}
+	
 
 	/*
 	 * Only for search improvement by name or other variable, not to insert and view
@@ -119,6 +181,7 @@ public class PetController implements Crud {
 
 			while (cursor.hasNext()) {
 				result = cursor.next();
+				cursor.close();
 				break;
 			}
 		} catch (NoSuchElementException ex) {
@@ -155,9 +218,11 @@ public class PetController implements Crud {
 				if (result.containsValue(user) && result.containsValue(password)) {
 					response = Boolean.TRUE.toString();
 					System.out.println(response);
+					cursor.close();
 					break;
 				} else {
 					response = Boolean.FALSE.toString();
+					cursor.close();
 				}
 			}
 		} catch (Exception ex) {
@@ -189,14 +254,16 @@ public class PetController implements Crud {
 				if (userDB.equals(user) && passwordDB.equals(password)) {
 					response = Boolean.TRUE.toString();
 					System.out.println(response);
+					cursor.close();
 					break;
 				} else {
 					response = Boolean.FALSE.toString();
 					System.out.println(response);
+					cursor.close();
 					break;
 				}
-
 			}
+			cursor.close();
 		} catch (Exception ex) {
 			System.out.println("Enter to Exception");
 		}
@@ -207,12 +274,12 @@ public class PetController implements Crud {
 	@GET
 	@Path("/info")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getInfo(@QueryParam("name") String name, @QueryParam("ownerName") String ownerName, @QueryParam("ownerLastname") String ownerLastname, @QueryParam("user") String user) throws ConnectException {
+	public String getInfo(@QueryParam("name") String name, @QueryParam("ownerLastname") String ownerLastname, @QueryParam("ownerDni") String ownerDni, @QueryParam("user") String user) throws ConnectException {
 		
 		String pivot = null;
 		String pivotName = null;
-		String pivotOwnerName = null;
 		String pivotOwnerLastname = null;
+		String pivotDni = null;
 		Document result = null;
 
 		MongoCollection<Document> table = connectNow.getCollection(user);
@@ -222,12 +289,12 @@ public class PetController implements Crud {
 		while (cursor.hasNext()) {
 			result = cursor.next();
 			pivotName = result.get("name").toString();
-			pivotOwnerName = result.get("ownerName").toString();
 			pivotOwnerLastname = result.get("ownerLastname").toString();
+			pivotDni = result.get("ownerDni").toString();
 			
 			System.out.println(pivotName);
-			System.out.println(pivotOwnerName);
 			System.out.println(pivotOwnerLastname);		
+			System.out.println(pivotDni);
 			
 				if (pivotName.equals(name) ) {
 					pivot = result.toJson();
@@ -240,13 +307,14 @@ public class PetController implements Crud {
 		return pivot;
 	}
 
-	/* Returns one result */
+	/******** Returns one result, deprecated at the moment ***********/
 	@GET
 	@Path("/url")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public String getURL(String name, String ownerName, String 	ownerLastname, String user) {
 		return "https://pets2018.herokuapp.com/rest/pet/info?name="+name+"&ownerName="+ownerName+"&ownerLastname="+ownerLastname+"&user="+user;
 	}
+	/********  *******************/
 
 	public String createQRFromPet(String data) {
 		byte[] resultToByte = null;
@@ -267,6 +335,42 @@ public class PetController implements Crud {
 		}
 		return toBase64;
 	}
+	
+	@GET
+	@Path("/lost")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getAllResults(@QueryParam("user") String user){
+		ArrayList<Pet> petList = new ArrayList<>();
+		String pivotId = null;
+		String pivotRaze = null;
+		String pivotAge = null;
+		String pivotName = null;
+		String pivotStreet1 = null;
+		LocalDate pivotDateLost = null;
+		Gson gson = new Gson();
+		String strJson = null;
+		Document result = null;
+
+		MongoCollection<Document> table = connectNow.getCollection(user);
+		FindIterable<Document> findIterable = table.find();
+		MongoCursor<Document> cursor = findIterable.iterator();
+		
+		while (cursor.hasNext()) {
+			result = cursor.next();
+			pivotId = result.get("_id").toString();
+			pivotRaze = result.get("raze").toString();
+			pivotName = result.get("name").toString();
+			pivotAge = result.get("age").toString();
+			pivotStreet1 = result.get("street1").toString();
+			
+			petList.add(new Pet(new ObjectId(pivotId).toString(), pivotRaze, pivotName, Integer.parseInt(pivotAge), pivotStreet1, pivotDateLost));
+			
+			strJson = gson.toJson(petList);
+		}
+		cursor.close();
+		
+		return strJson;
+	}
 
 	@GET
 	@Path("/test")
@@ -274,5 +378,9 @@ public class PetController implements Crud {
 	public String getMessage() {
 		return "Hello World";
 	}
-
+	
+	public static void main(String[] args) {
+		PetController pc = new PetController();
+System.out.println(pc.getAllResults("clivet"));
+	}
 }

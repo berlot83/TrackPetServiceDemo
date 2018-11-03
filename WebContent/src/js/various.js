@@ -123,3 +123,38 @@ function loginToControllers(){
 	    }
 	});
 }
+
+function checkVaccines(){
+	var checkVaccines = document.getElementById("checkVaccines");
+	var antiRabic = document.getElementById("dateAntiRabicVaccine");
+	var polivalent = document.getElementById("datePolivalentVaccine");
+	var sextuple = document.getElementById("dateSextupleVaccine");
+	var octuple = document.getElementById("dateOctupleVaccine");
+	
+	if(checkVaccines.checked){
+		antiRabic.disabled = false;					
+		polivalent.disabled = false;
+		sextuple.disabled = false;
+		octuple.disabled = false;
+		
+	}else{
+		antiRabic.disabled = true;					
+		polivalent.disabled = true;
+		sextuple.disabled = true;
+		octuple.disabled = true;
+	
+	}	
+}
+
+
+function age(){
+	var yearBirthay = document.getElementById("age");
+	var actualYear = (new Date()).getFullYear();
+	var age = actualYear - yearBirthay.value; 
+	
+	console.log(age);
+	
+	var resultAge = document.getElementById("resultAge");
+	
+	resultAge.innerHTML = "<h5><a href='#'><span class='badge badge-danger'>Edad actual de la mascota:  "+age+" años</span></a></h5>";
+}

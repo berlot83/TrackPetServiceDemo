@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.Base64;
 import java.util.EnumMap;
 import java.util.Map;
-
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.WriterException;
@@ -22,7 +21,7 @@ public class QRCodeGenerator{
 		/* Border size */
 		Map<EncodeHintType, Object> hints = new EnumMap<EncodeHintType, Object>(EncodeHintType.class);
 		hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
-		hints.put(EncodeHintType.MARGIN, 0); /* default = 4 */
+		hints.put(EncodeHintType.MARGIN, 1); /* default = 4 */
 		/* Border size */
 		
 		

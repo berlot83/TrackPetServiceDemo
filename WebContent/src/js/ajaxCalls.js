@@ -52,6 +52,13 @@ function loginAndInsert(){
 	    			    		var street1 = document.getElementById("street1");
 	    			    		var phone1 = document.getElementById("phone1");
 	    			    		var phone2 = document.getElementById("phone2");
+	    			    		var email = document.getElementById("email");
+	    			    		var facebook = document.getElementById("facebook");
+	    			    		var instagram = document.getElementById("instagram");
+	    			    		var dateAntiRabicVaccine = document.getElementById("dateAntiRabicVaccine");
+	    			    		var datePolivalentVaccine = document.getElementById("datePolivalentVaccine");
+	    			    		var dateSextupleVaccine = document.getElementById("dateSextupleVaccine");
+	    			    		var dateOctupleVaccine = document.getElementById("dateOctupleVaccine");
 	    			    		var clinicHistory = document.getElementById("clinicHistory");
 	    			    		var illness = document.getElementById("illness");
 	    			    		var medicated = document.getElementById("medicated");
@@ -72,35 +79,35 @@ function loginAndInsert(){
 	    			    		    	attribute.value = "data:image/png;base64, "+xhr1.responseText;
 	    			    		    	createImage.setAttributeNode(attribute);
 	    			    		    	divResult.appendChild(createImage);
-	    			    		    	
-	    			    		    	var link = document.createElement("a");
-	    			    		    	var hrefAttribute = document.createAttribute("href");
-	    			    		    	hrefAttribute.value = "google.com.ar";
-	    			    		    	link.setAttributeNode(hrefAttribute);
-	    			    		    	link.setAttribute('download', name+'_'+ownerName+'_'+ownerLastname+'_'+'.jpg');
-	    			    		    	link.setAttribute('target', '_blank');
-	    			    		    	
-	    			    		    	var button = document.createElement("button");
-
-	    			    		    	var classAttribute = document.createAttribute("class");
-	    			    		    	classAttribute.value = "btn btn-primary";
-	    			    		    	button.setAttributeNode(classAttribute);
-	    			    		    	button.setAttribute("id", "download");
-	    			    		    	
-	    			    		    	var download = document.getElementById("download");
-	    			    		    	
-	    			    		    	button.innerHTML = "Descarga";
-	    			    		    	var downloadButtonDiv = document.getElementById("downloadButtonDiv");
-	    			    		    	downloadButtonDiv.appendChild(button);
-	    			    		    	
-	    			    		    	button.appendChild(link);
+	    			    		   
+//	    			    		    	var link = document.createElement("a");
+//	    			    		    	var hrefAttribute = document.createAttribute("href");
+//	    			    		    	hrefAttribute.value = "google.com.ar";
+//	    			    		    	link.setAttributeNode(hrefAttribute);
+//	    			    		    	link.setAttribute('download', name+'_'+ownerName+'_'+ownerLastname+'_'+'.jpg');
+//	    			    		    	link.setAttribute('target', '_blank');
+//	    			    		    	
+//	    			    		    	var button = document.createElement("button");
+//
+//	    			    		    	var classAttribute = document.createAttribute("class");
+//	    			    		    	classAttribute.value = "btn btn-primary";
+//	    			    		    	button.setAttributeNode(classAttribute);
+//	    			    		    	button.setAttribute("id", "download");
+//	    			    		    	
+//	    			    		    	var download = document.getElementById("download");
+//	    			    		    	
+//	    			    		    	button.innerHTML = "Descarga";
+//	    			    		    	var downloadButtonDiv = document.getElementById("downloadButtonDiv");
+//	    			    		    	downloadButtonDiv.appendChild(button);
+//	    			    		    	
+//	    			    		    	button.appendChild(link);
 	    			    		    	
 	    			    		    	
 	    			    		    }
 	    			    		}
 	    			    		xhr1.open("POST", url, true);
 	    			    		xhr1.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	    			    		xhr1.send("user="+user+"&raze="+raze.value+"&name="+name.value+"&age="+age.value+"&ownerName="+ownerName.value+"&ownerLastname="+ownerLastname.value+"&ownerDni="+ownerDni.value+"&street1="+street1.value+"&phone1="+phone1.value+"&phone2="+phone2.value+"&clinicHistory="+clinicHistory.value+"&illness="+illness.value+"&medicated="+medicated.value+"&status="+status.value+"&subscription="+subscription.value);
+	    			    		xhr1.send("user="+user+"&raze="+raze.value+"&name="+name.value+"&age="+age.value+"&ownerName="+ownerName.value+"&ownerLastname="+ownerLastname.value+"&ownerDni="+ownerDni.value+"&street1="+street1.value+"&phone1="+phone1.value+"&phone2="+phone2.value+"&email="+email.value+"&facebook="+facebook.value+"&instagram="+instagram.value+"&dateAntiRabicVaccine="+dateAntiRabicVaccine.value+"&datePolivalentVaccine="+datePolivalentVaccine.value+"&dateSextupleVaccine="+dateSextupleVaccine.value+"&dateOctupleVaccine="+dateOctupleVaccine.value+"&clinicHistory="+clinicHistory.value+"&illness="+illness.value+"&medicated="+medicated.value+"&status="+status.value+"&subscription="+subscription.value);
 
 	    			    	}else{
 			                	$.alert({type: 'red',
