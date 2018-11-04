@@ -71,16 +71,21 @@ function loginAndInsert(){
 	    			    		//Send the proper header information along with the request
 	    			    		xhr1.onreadystatechange = function() {//Call a function when the state changes.
 	    			    		    if(xhr1.readyState == 4 && xhr1.status == 200) {
-	    			    		  
-	    			    		    	/* On Controllers page to show QR tag generated */
+
+										
+										
+										
+										/* On Controllers page to show QR tag generated */
 	    			    		    	var createImage = document.createElement("img");
 	    			    		    	var divResult = document.getElementById("qrResult");	    	
 	    			    		    	var attribute = document.createAttribute("src");
 	    			    		    	attribute.value = "data:image/png;base64, "+xhr1.responseText;
 	    			    		    	createImage.setAttributeNode(attribute);
 	    			    		    	divResult.appendChild(createImage);
-	    			    		   
-//	    			    		    	var link = document.createElement("a");
+										
+										$.alert("<body><content><div><img src='data:image/png;base64, "+xhr1.responseText+"'></img></div></content></body>");
+										
+										//	    			    		    	var link = document.createElement("a");
 //	    			    		    	var hrefAttribute = document.createAttribute("href");
 //	    			    		    	hrefAttribute.value = "google.com.ar";
 //	    			    		    	link.setAttributeNode(hrefAttribute);
